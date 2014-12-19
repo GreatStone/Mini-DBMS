@@ -1,0 +1,12 @@
+--create testdb;
+
+--use testdb;
+
+--create table atable (
+--	t int not null,
+--	b string null,
+--	primary key (t)
+--);
+
+select t as a, b as ali from atable
+ where t+2 not in (select x as xli from btable)

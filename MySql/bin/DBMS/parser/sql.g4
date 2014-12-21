@@ -1,5 +1,13 @@
 grammar sql;
 
+@header{
+import java.util.*;
+import com.db.minidb.data.value.*;
+import com.db.minidb.dict.type.*;
+import DBMS.execute.*;
+}
+           
+
 start: (sqls ';')+ EOF;
 
 sqls
@@ -18,58 +26,66 @@ sqls
 sql_use
 	:	KEY_USE database_name;
 
-sql_drop_table
-	:	KEY_DROP KEY_TABLE table_name;
+sql_drop_table returns [boolean value]
+	:	KEY_DROP KEY_TABLE table_name{System.out.println("sql_drop_table");};
 
-sql_drop_database
-	:	KEY_DROP database_name;
+sql_drop_database returns [boolean value]
+	:	KEY_DROP database_name {System.out.println("sql_drop_database");};
 
-sql_create_database
-	:	KEY_CREATE database_name;
+sql_create_database returns [boolean value]
+	:	KEY_CREATE database_name {System.out.println("SQLCREATEDATABASE");};
 
-sql_create_table
+sql_create_table returns [boolean value]
 	:	KEY_CREATE KEY_TABLE table_name '('
 		colomn_name types ((KEY_NOT)? KEY_NULL)? (',' colomn_name types ((KEY_NOT)? KEY_NULL)? )*
 		(',' KEY_PRIMARY KEY_KEY ('('colomn_name (',' colomn_name)* ')'))?
 		(',' KEY_FOREIGN KEY_KEY colomn_name KEY_REFERENCES database_name colomn_name)?
-		')';
+		')' {System.out.println("SQL_CREATE_TABLE");};
 
-sql_select
+sql_select returns [SelectSet value]
 	:	KEY_SELECT colomns (',' colomns)* 
 		KEY_FROM tables  (',' tables)*
-		(KEY_WHERE expr (',' expr)*)?;
+		sql_where? {System.out.println("SQL_SELECT");};
 
-sql_insert
+sql_insert returns [boolean value]
 	:	KEY_INSERT KEY_INTO tables KEY_VALUES
-		'(' consts (',' consts)* ')';
+		'(' consts (',' consts)* ')' {System.out.println("SQL_INSERT");};
 
-sql_update
+sql_update returns [boolean value]
 	:	KEY_INSERT KEY_SET colomns '=' expr (',' colomns '=' expr)
-		(KEY_WHERE expr (',' expr)*)?;
+		sql_where?{System.out.println("SQL_UPDATE");};
 
-sql_delete
+sql_delete returns [boolean value]
 	:	KEY_DELETE KEY_FROM tables
-		(KEY_WHERE expr (',' expr)*)?;
+		sql_where? {System.out.println("SQL_DELETE");};
+
+sql_where returns [boolean value]
+	:
+	(KEY_WHERE expr) {System.out.println("SQL_WHERE");};
 
 tables
-	:	table_name (KEY_AS table_alias_name)?;
+	:	table_name (KEY_AS table_alias_name)?{System.out.println("TABLES");};
 
 colomns
-         :	colomn_name (KEY_AS colomn_alias_name)?;
+         :	(colomn_name (KEY_AS colomn_alias_name)?)
+         |  (val KEY_AS colomn_alias_name)
+         | '*';
 
-consts returns[Object value]
-	:	x=type_int {$value = $x.value; }|
-                y=type_double {$value = $y.value;} |
-                z=type_string {$value = $z.value;};
+consts returns [ValueBase value]
+	:	x=type_int {$value = $x.value; }
+                |y=type_double {$value = $y.value;}
+                |z=type_string {$value = $z.value;};
 
-types
-	:	(KEY_INT|KEY_DOUBLE|KEY_STRING);
+types returns [TypeDataEnum value]
+	:	KEY_INT{$value = TypeDataEnum.INT;}
+	|KEY_DOUBLE{$value=TypeDataEnum.DOUBLE;}
+	|KEY_STRING{$value=TypeDataEnum.STRING;};
 
 compare
 	:	LT|LT_EQ|GT|GT_EQ|EQ|NOT_EQ;
 
 bool_op
-	:	AMP|PIPE;
+	:	KEY_AND|KEY_OR;
 op
 	:	PLUS|MINUS|STAR|DIV;
 
@@ -78,7 +94,7 @@ select_or_set
 	|	( '(' (type_int|type_double|type_string) ( ',' (type_int|type_double|type_string))* ')');
 
 subval
-    :   (((colomn_name|colomn_alias_name)|(consts)) op ((colomn_name|colomn_alias_name)|(consts))) | (colomn_name|colomn_alias_name) | (consts);
+    :   (colomn_name) | (consts)|((consts|colomn_name) op (consts|colomn_name));
 
 val
     :   (subval) | (subval op subval);
@@ -87,27 +103,29 @@ sub_bool_val
     :   (val compare val);
 
 bool_val
-    :   (sub_bool_val) | (sub_bool_val bool_op val);
+    :   (sub_bool_val)
+        | (sub_bool_val bool_op sub_bool_val) 
+        | ((KEY_NOT)? KEY_EXISTS select_or_set)
+        | (val|colomn_name (KEY_NOT)? KEY_IN select_or_set);
 
 expr
-	:	((KEY_NOT)? KEY_EXISTS select_or_set)
-        |	(val (KEY_NOT)? KEY_IN select_or_set)
-	|	val
+	:	val
 	|	(val op val)
 	|	(val compare val)
-	|	(val bool_op val)
+	|	(bool_val bool_op bool_val)
     ;
 
-colomn_name : IDENTIFIER;
-colomn_alias_name : IDENTIFIER;
-table_name : IDENTIFIER;
-table_alias_name : IDENTIFIER;
-database_name : IDENTIFIER;
-type_int returns[Integer value] : x=INTIDENTI {$value = new Integer($x.text);};
-type_double returns [Double value] : x=DOUBLEIDENTI{$value=new Double($x.text);};
-type_string returns [String value] : x=STRINGIDENTI {$value = new String($x.text);};
+colomn_name returns [String value] : x=IDENTIFIER{$value = new String ($x.text);};
+colomn_alias_name returns [String value] : x = IDENTIFIER {$value = new String($x.text);};
+table_name returns[String value] : x = IDENTIFIER{$value = new String ($x.text);};
+table_alias_name returns [String value] : x = IDENTIFIER{$value = new String($x.text);};
+database_name returns [String value] :  x= IDENTIFIER{$value =  new String($x.text);};
+type_int returns[ValueInt value] : x=INTIDENTI {$value = new ValueInt(TypeDataEnum.INT,new Integer($x.text));};
+type_double returns [ValueDouble value] : x=DOUBLEIDENTI {$value = new ValueDouble(TypeDataEnum.DOUBLE,new Double($x.text));};
+type_string returns [ValueString value] : x=STRINGIDENTI {$value = new ValueString(TypeDataEnum.STRING,new String($x.text));};
 
 KEY_ALTER : A L T E R;
+KEY_AND	: A N D;
 KEY_AS : A S;
 KEY_CREATE: C R E A T E;
 KEY_DATABASE : D A T A B A S E;
@@ -126,6 +144,7 @@ KEY_KEY : K E Y;
 KEY_NOT : N O T;
 KEY_NULL : N U L L;
 KEY_ON : O N;
+KEY_OR : O R;
 KEY_PRIMARY : P R I M A R Y;
 KEY_REFERENCES : R E F E R E N C E S;
 KEY_SELECT : S E L E C T;
@@ -144,7 +163,7 @@ INTIDENTI
 DOUBLEIDENTI
     :  ([O-9]+('.'[0-9])?)|(([0-9])*'.'[0-9]);
 STRINGIDENTI
-    : '\''[^']*'\'';
+    :   '"'[a-zA-Z0-9`~@#$%^&*()_-=+,.<>/?;:']*'"';
 
 SINGLE_LINE_COMMENT
 	: '--' ~[\r\n]* -> channel(HIDDEN);

@@ -8,6 +8,11 @@ public class AllCombine {
 		this.__up = up;
 		this.size = up.length;
 		this.combine = new int[size];
+		int i;
+		for (i = 0; i < size; i++){
+			combine[i] = 0;
+		}
+		combine[0] = -1;
 	}
 	public boolean hasNext () {
 		int i;

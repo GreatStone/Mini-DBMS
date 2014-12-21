@@ -1,11 +1,5 @@
 grammar sql;
 
-@import{
-	import java.util.*;
-	import com.db.minidb.data.value.*;
-	import DBMS.excute.*;
-}
-
 start: (sqls ';')+ EOF;
 
 sqls
@@ -24,54 +18,52 @@ sqls
 sql_use
 	:	KEY_USE database_name;
 
-sql_drop_table returns [boolean value]
-	:	KEY_DROP KEY_TABLE table_name{//TODO SQLDROPTABLE};
+sql_drop_table
+	:	KEY_DROP KEY_TABLE table_name;
 
-sql_drop_database returns [boolean value]
-	:	KEY_DROP database_name {//TODO SQLDROPDATABASE};
+sql_drop_database
+	:	KEY_DROP database_name;
 
-sql_create_database returns [boolean value]
-	:	KEY_CREATE database_name {//TODO SQLCREATEDATABASE};
+sql_create_database
+	:	KEY_CREATE database_name;
 
-sql_create_table returns [boolean value]
+sql_create_table
 	:	KEY_CREATE KEY_TABLE table_name '('
 		colomn_name types ((KEY_NOT)? KEY_NULL)? (',' colomn_name types ((KEY_NOT)? KEY_NULL)? )*
 		(',' KEY_PRIMARY KEY_KEY ('('colomn_name (',' colomn_name)* ')'))?
 		(',' KEY_FOREIGN KEY_KEY colomn_name KEY_REFERENCES database_name colomn_name)?
-		')' {//TODO CREATETABLE};
+		')';
 
-sql_select returns [SelectSet value]
+sql_select
 	:	KEY_SELECT colomns (',' colomns)* 
 		KEY_FROM tables  (',' tables)*
-		(KEY_WHERE expr (',' expr)*)? {//TODO SQLSELECT};
+		(KEY_WHERE expr (',' expr)*)?;
 
-sql_insert returns [boolean value]
+sql_insert
 	:	KEY_INSERT KEY_INTO tables KEY_VALUES
-		'(' consts (',' consts)* ')' {//TODO SQLINSERT};
+		'(' consts (',' consts)* ')';
 
-sql_update returns [boolean value]
+sql_update
 	:	KEY_INSERT KEY_SET colomns '=' expr (',' colomns '=' expr)
-		(KEY_WHERE expr (',' expr)*)?{//TODO SQLUPDATE};
+		(KEY_WHERE expr (',' expr)*)?;
 
-sql_delete returns [boolean value]
+sql_delete
 	:	KEY_DELETE KEY_FROM tables
-		(KEY_WHERE expr (',' expr)*)? {//TODO SQLDELETE};
+		(KEY_WHERE expr (',' expr)*)?;
 
 tables
-	:	table_name (KEY_AS table_alias_name)?{//TODO TABLES};
+	:	table_name (KEY_AS table_alias_name)?;
 
 colomns
-         :	colomn_name (KEY_AS colomn_alias_name)? {//TODO COLOMNS};
+         :	colomn_name (KEY_AS colomn_alias_name)?;
 
-consts returns[ValueBase value]
+consts returns[Object value]
 	:	x=type_int {$value = $x.value; }|
                 y=type_double {$value = $y.value;} |
                 z=type_string {$value = $z.value;};
 
-types returns [TypeDataEnum value]
-	:	KEY_INT{$value = TypeDataEnum.INT;}
-	|KEY_DOUBLE{$value=TypeDataEnum.DOUBLE;}
-	|KEY_STRING{$value=TypeDataEnum.STRING};
+types
+	:	(KEY_INT|KEY_DOUBLE|KEY_STRING);
 
 compare
 	:	LT|LT_EQ|GT|GT_EQ|EQ|NOT_EQ;
@@ -106,11 +98,11 @@ expr
 	|	(val bool_op val)
     ;
 
-colomn_name returns [String value] : x=IDENTIFIER{$value = new String ($x.text);};
-colomn_alias_name returns [String value] : x = IDENTIFIER {$value = new String($x.text);};
-table_name returns[String value] : x = IDENTIFIER{$value = new String ($x.text);};
-table_alias_name returns [String value] : x = IDENTIFIER{$value = new String($x.text);};
-database_name returns [String value] :  x= IDENTIFIER{$value =  new String($x.text);};
+colomn_name : IDENTIFIER;
+colomn_alias_name : IDENTIFIER;
+table_name : IDENTIFIER;
+table_alias_name : IDENTIFIER;
+database_name : IDENTIFIER;
 type_int returns[Integer value] : x=INTIDENTI {$value = new Integer($x.text);};
 type_double returns [Double value] : x=DOUBLEIDENTI{$value=new Double($x.text);};
 type_string returns [String value] : x=STRINGIDENTI {$value = new String($x.text);};

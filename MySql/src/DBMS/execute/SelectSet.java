@@ -30,7 +30,6 @@ public class SelectSet {
 		while (combine.hasNext()){
 			cur = combine.getNext();
 			
-			//TODO
 		}
 	}
 	

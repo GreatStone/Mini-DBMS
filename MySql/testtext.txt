@@ -1,0 +1,72 @@
+Prepare to parser :{
+select t as a, b as ali from atable where t+2 not in (select x as xli from btable) and c < 2;}
+TABLES
+TABLES
+SQL_SELECT
+SQL_WHERE
+SQL_SELECT
+selecttasa,basalifromatablewheret+2notin(selectxasxlifrombtable)andc<2			DBMS.parser.sqlParser$SqlsContext
+selecttasa,basalifromatablewheret+2notin(selectxasxlifrombtable)andc<2			DBMS.parser.sqlParser$Sql_selectContext
+select			org.antlr.v4.runtime.tree.TerminalNodeImpl
+tasa			DBMS.parser.sqlParser$ColomnsContext
+t			DBMS.parser.sqlParser$Colomn_nameContext
+t			org.antlr.v4.runtime.tree.TerminalNodeImpl
+as			org.antlr.v4.runtime.tree.TerminalNodeImpl
+a			DBMS.parser.sqlParser$Colomn_alias_nameContext
+a			org.antlr.v4.runtime.tree.TerminalNodeImpl
+,			org.antlr.v4.runtime.tree.TerminalNodeImpl
+basali			DBMS.parser.sqlParser$ColomnsContext
+b			DBMS.parser.sqlParser$Colomn_nameContext
+b			org.antlr.v4.runtime.tree.TerminalNodeImpl
+as			org.antlr.v4.runtime.tree.TerminalNodeImpl
+ali			DBMS.parser.sqlParser$Colomn_alias_nameContext
+ali			org.antlr.v4.runtime.tree.TerminalNodeImpl
+from			org.antlr.v4.runtime.tree.TerminalNodeImpl
+atable			DBMS.parser.sqlParser$TablesContext
+atable			DBMS.parser.sqlParser$Table_nameContext
+atable			org.antlr.v4.runtime.tree.TerminalNodeImpl
+wheret+2notin(selectxasxlifrombtable)andc<2			DBMS.parser.sqlParser$Sql_whereContext
+where			org.antlr.v4.runtime.tree.TerminalNodeImpl
+t+2notin(selectxasxlifrombtable)andc<2			DBMS.parser.sqlParser$ExprContext
+t+2notin(selectxasxlifrombtable)			DBMS.parser.sqlParser$Bool_valContext
+t+2			DBMS.parser.sqlParser$ValContext
+t+2			DBMS.parser.sqlParser$SubvalContext
+t			DBMS.parser.sqlParser$Colomn_nameContext
+t			org.antlr.v4.runtime.tree.TerminalNodeImpl
++			DBMS.parser.sqlParser$OpContext
++			org.antlr.v4.runtime.tree.TerminalNodeImpl
+2			DBMS.parser.sqlParser$ConstsContext
+2			DBMS.parser.sqlParser$Type_intContext
+2			org.antlr.v4.runtime.tree.TerminalNodeImpl
+not			org.antlr.v4.runtime.tree.TerminalNodeImpl
+in			org.antlr.v4.runtime.tree.TerminalNodeImpl
+(selectxasxlifrombtable)			DBMS.parser.sqlParser$Select_or_setContext
+(			org.antlr.v4.runtime.tree.TerminalNodeImpl
+selectxasxlifrombtable			DBMS.parser.sqlParser$Sql_selectContext
+select			org.antlr.v4.runtime.tree.TerminalNodeImpl
+xasxli			DBMS.parser.sqlParser$ColomnsContext
+x			DBMS.parser.sqlParser$Colomn_nameContext
+x			org.antlr.v4.runtime.tree.TerminalNodeImpl
+as			org.antlr.v4.runtime.tree.TerminalNodeImpl
+xli			DBMS.parser.sqlParser$Colomn_alias_nameContext
+xli			org.antlr.v4.runtime.tree.TerminalNodeImpl
+from			org.antlr.v4.runtime.tree.TerminalNodeImpl
+btable			DBMS.parser.sqlParser$TablesContext
+btable			DBMS.parser.sqlParser$Table_nameContext
+btable			org.antlr.v4.runtime.tree.TerminalNodeImpl
+)			org.antlr.v4.runtime.tree.TerminalNodeImpl
+and			DBMS.parser.sqlParser$Bool_opContext
+and			org.antlr.v4.runtime.tree.TerminalNodeImpl
+c<2			DBMS.parser.sqlParser$Bool_valContext
+c<2			DBMS.parser.sqlParser$Sub_bool_valContext
+c			DBMS.parser.sqlParser$ValContext
+c			DBMS.parser.sqlParser$SubvalContext
+c			DBMS.parser.sqlParser$Colomn_nameContext
+c			org.antlr.v4.runtime.tree.TerminalNodeImpl
+<			DBMS.parser.sqlParser$CompareContext
+<			org.antlr.v4.runtime.tree.TerminalNodeImpl
+2			DBMS.parser.sqlParser$ValContext
+2			DBMS.parser.sqlParser$SubvalContext
+2			DBMS.parser.sqlParser$ConstsContext
+2			DBMS.parser.sqlParser$Type_intContext
+2			org.antlr.v4.runtime.tree.TerminalNodeImpl

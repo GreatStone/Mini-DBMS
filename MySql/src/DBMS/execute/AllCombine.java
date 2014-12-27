@@ -17,7 +17,7 @@ public class AllCombine {
 	public boolean hasNext () {
 		int i;
 		for (i = 0; i < size; i++){
-			if (combine[i] < __up[i-1]){
+			if (combine[i] < __up[i]-1){
 				return true;
 			}
 		}

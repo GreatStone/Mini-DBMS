@@ -28,6 +28,9 @@ public class DictCenterManager {
 	}
 	public static void loadDataDict() {
 		synchronized (lockObj) {
+			// TODO
+			String tmp = DictDatabaseListManager.getDatabaseListDictFileFullPath();
+			System.out.println("zxyue" + tmp);
 			databaseList = DictDatabaseListManager.readDatabaseListFromFile(
 					FileTool.openFile(DictDatabaseListManager.getDatabaseListDictFileFullPath()));
 		}

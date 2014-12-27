@@ -25,9 +25,13 @@ public class ValueManager {
 				ret = (ValueBase) nc.newInstance();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-			}catch (InstantiationException | IllegalAccessException e) {
+			} catch (Exception e){
 				e.printStackTrace();
 			}
+			// TODO
+			/*catch (InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}*/
 			return ret;
 		}
 	}

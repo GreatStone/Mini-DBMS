@@ -1,4 +1,4 @@
-// Generated from D:\Mini-DBMS\MySql\src\DBMS\parser\sql.g4 by ANTLR 4.1
+// Generated from D:\CodeWork\Mini-DBMS\MySql\src\DBMS\parser\sql.g4 by ANTLR 4.1
 package DBMS.parser;
 
 import java.util.*;
@@ -92,6 +92,11 @@ public class sqlLexer extends Lexer {
 		case 37: SPACES_action((RuleContext)_localctx, actionIndex); break;
 		}
 	}
+	private void MULTILINE_COMMENT_action(RuleContext _localctx, int actionIndex) {
+		switch (actionIndex) {
+		case 1: _channel = HIDDEN;  break;
+		}
+	}
 	private void SINGLE_LINE_COMMENT_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 0: _channel = HIDDEN;  break;
@@ -100,11 +105,6 @@ public class sqlLexer extends Lexer {
 	private void SPACES_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 2: _channel = HIDDEN;  break;
-		}
-	}
-	private void MULTILINE_COMMENT_action(RuleContext _localctx, int actionIndex) {
-		switch (actionIndex) {
-		case 1: _channel = HIDDEN;  break;
 		}
 	}
 

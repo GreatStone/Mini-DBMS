@@ -23,19 +23,19 @@ sqls
 	;
 
 
-sql_use
+sql_use returns [ValueBase value]
 	:	KEY_USE database_name;
 
-sql_drop_table returns [boolean value]
+sql_drop_table returns [ValueBase value]
 	:	KEY_DROP KEY_TABLE table_name{System.out.println("sql_drop_table");};
 
-sql_drop_database returns [boolean value]
+sql_drop_database returns [ValueBase value]
 	:	KEY_DROP database_name {System.out.println("sql_drop_database");};
 
-sql_create_database returns [boolean value]
+sql_create_database returns [ValueBase value]
 	:	KEY_CREATE database_name {System.out.println("SQLCREATEDATABASE");};
 
-sql_create_table returns [boolean value]
+sql_create_table returns [ValueBase value]
 	:	KEY_CREATE KEY_TABLE table_name '('
 		colomn_name types ((KEY_NOT)? KEY_NULL)? (',' colomn_name types ((KEY_NOT)? KEY_NULL)? )*
 		(',' KEY_PRIMARY KEY_KEY ('('colomn_name (',' colomn_name)* ')'))?
@@ -47,19 +47,19 @@ sql_select returns [SelectSet value]
 		KEY_FROM tables  (',' tables)*
 		sql_where? {System.out.println("SQL_SELECT");};
 
-sql_insert returns [boolean value]
+sql_insert returns [ValueBase value]
 	:	KEY_INSERT KEY_INTO tables KEY_VALUES
 		'(' consts (',' consts)* ')' {System.out.println("SQL_INSERT");};
 
-sql_update returns [boolean value]
+sql_update returns [ValueBase value]
 	:	KEY_INSERT KEY_SET colomns '=' expr (',' colomns '=' expr)
 		sql_where?{System.out.println("SQL_UPDATE");};
 
-sql_delete returns [boolean value]
+sql_delete returns [ValueBase value]
 	:	KEY_DELETE KEY_FROM tables
 		sql_where? {System.out.println("SQL_DELETE");};
 
-sql_where returns [boolean value]
+sql_where returns [ValueBase value]
 	:
 	(KEY_WHERE expr) {System.out.println("SQL_WHERE");};
 
@@ -89,34 +89,34 @@ bool_op
 op
 	:	PLUS|MINUS|STAR|DIV;
 
-select_or_set
+select_or_set returns [SelectSet value]
 	:	'(' sql_select ')'
 	|	( '(' (type_int|type_double|type_string) ( ',' (type_int|type_double|type_string))* ')');
 
-subval
+subval returns [ValueBase value]
     :   (colomn_name) | (consts)|((consts|colomn_name) op (consts|colomn_name));
 
-val
+val returns [ValueBase value]
     :   (subval) | (subval op subval);
 
-sub_bool_val
+sub_bool_val returns [ValueBase value]
     :   (val compare val);
 
-bool_val
+bool_val returns [ValueBase value]
     :   (sub_bool_val)
         | (sub_bool_val bool_op sub_bool_val) 
         | ((KEY_NOT)? KEY_EXISTS select_or_set)
-        | (val|colomn_name (KEY_NOT)? KEY_IN select_or_set);
+        | (val (KEY_NOT)? KEY_IN select_or_set);
 
-expr
+expr returns [ValueBase value]
 	:	val
 	|	(val op val)
 	|	(val compare val)
 	|	(bool_val bool_op bool_val)
     ;
 
-colomn_name returns [String value] : x=IDENTIFIER{$value = new String ($x.text);};
-colomn_alias_name returns [String value] : x = IDENTIFIER {$value = new String($x.text);};
+colomn_name returns [ValueBase value] : x=IDENTIFIER{System.out.println("COLOMN_NAME");};
+colomn_alias_name returns [ValueBase value] : x = IDENTIFIER {System.out.println("COLOMN_ALIAS_NAME");};
 table_name returns[String value] : x = IDENTIFIER{$value = new String ($x.text);};
 table_alias_name returns [String value] : x = IDENTIFIER{$value = new String($x.text);};
 database_name returns [String value] :  x= IDENTIFIER{$value =  new String($x.text);};

@@ -132,7 +132,10 @@ public class DataTableManager {
 			StringBuffer bf = new StringBuffer();
 			bf.append("\t\t");
 			for(DictColumnInfo col : table.getColumns()) {
-				bf.append(String.format("%10s", col.getColumnName() ));
+				String put = col.getColumnName();
+				if (put.indexOf(".") != -1)
+					put = (put.split("\\."))[1];
+				bf.append(String.format("%10s", put ));
 			}
 			bf.append("\r\n");
 			for(DataRecord record : table.getRecords()) {

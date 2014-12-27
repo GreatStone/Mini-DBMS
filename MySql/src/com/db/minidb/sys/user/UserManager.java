@@ -154,7 +154,8 @@ public class UserManager {
 		}
 		for(DataRecord record : userTable.getRecords()) {
 			if(record.getValues().get(usernameCol).getValue().equals(username)) {
-				int id = (int) record.getValues().get(userIdCol).getValue();
+				//TODO ԭΪint
+				int id = (Integer) record.getValues().get(userIdCol).getValue();
 				String name = (String) record.getValues().get(usernameCol).getValue();
 				String passwd = (String) record.getValues().get(passwdCol).getValue();
 				return new User(id, name, passwd);

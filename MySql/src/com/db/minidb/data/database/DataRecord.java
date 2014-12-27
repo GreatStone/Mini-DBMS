@@ -6,6 +6,9 @@ import com.db.minidb.data.value.ValueBase;
 
 public class DataRecord {
 	private List<ValueBase> values;
+	public DataRecord (){
+		values = new ArrayList<ValueBase>();
+	}
 	public List<ValueBase> getValues() {
 		return values;
 	}

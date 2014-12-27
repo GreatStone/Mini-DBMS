@@ -6,4 +6,5 @@ public enum TypeDataEnum {
 	FLOAT,
 	DOUBLE,
 	STRING,
+	BOOLEAN
 }

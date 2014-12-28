@@ -1,2 +1,0 @@
-grep 'Dict_SystemDatabase'  ~/workspace/MySql/src/com/db/minidb/*/*.java  ~/workspace/MySql/src/com/db/minidb/*/*/*.java -n
-

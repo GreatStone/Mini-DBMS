@@ -27,6 +27,10 @@ public abstract class ValueBase {
 		this.value = value;
 	}
 	
+	public boolean equals (Object obj){
+		return ((ValueBase)obj).getValue().equals(value);
+	}
+	
 	public abstract ValueBase readValue(InputStream is);
 	public abstract void writeValue(OutputStream os);
 	public abstract String displayValue();

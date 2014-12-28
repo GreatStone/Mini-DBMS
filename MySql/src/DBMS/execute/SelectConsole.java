@@ -31,11 +31,12 @@ public class SelectConsole {
 		int i;
 		int len = tree.getChildCount();
 		if (! tree.getChild(1).getText().equals("*")) {
-			for (i = 1; i < len; i++) {
+			for (i = 1; i < len; i+=2) {
 				if (tree.getChild(i) instanceof sqlParser.ColomnsContext) {
 					set.addSelect(tree.getChild(i));
-				} else {
-					i++;
+				}
+				if (!tree.getChild(i+1).getText().equals(",")){
+					i+=2;
 					break;
 				}
 			}
@@ -43,7 +44,7 @@ public class SelectConsole {
 			set.setChooseAll(true);
 			i = 3;
 		}
-		for ( ; i < len; i++){
+		for ( ; i < len; i+=2){
 			if (tree.getChild(i) instanceof sqlParser.TablesContext){
 				ParseTree __table = tree.getChild(i);
 				String __colname;
@@ -66,12 +67,8 @@ public class SelectConsole {
 				break;
 			}
 		}
-		if (i < len) {
-			set.setCheckTree(tree.getChild(i).getChild(1));
-		} else {
-			ParseTree __tree = new sqlParser.Sql_whereContext(null, 0);
-			((ValueTree) __tree).setValue(new ValueBool(TypeDataEnum.BOOLEAN, new Boolean(true)));
-			set.setCheckTree(__tree);
+		if (tree.getChild(len-1) instanceof sqlParser.Sql_whereContext) {
+			set.setCheckTree(tree.getChild(len-1).getChild(1));
 		}
 		
 		set.getResult();

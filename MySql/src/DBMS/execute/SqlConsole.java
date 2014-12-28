@@ -53,6 +53,16 @@ public class SqlConsole {
 				} else if (tree.getChild(i) instanceof sqlParser.Sql_create_databaseContext) {
 					DictCenterManager.getInstance();
 					DictCenterManager.addDatabase(tree.getChild(i).getChild(1).getText());
+				} else if (tree.getChild(i) instanceof sqlParser.Sql_insertContext){
+					InsertConsole __console = new InsertConsole();
+					__console.setTree(tree.getChild(i));
+					try{
+						__console.execute();
+					} catch (Exception e) {
+						e.printStackTrace();
+						continue;
+					}
+					System.out.println("Succuess insert");
 				}
 				else {
 					// TODO;

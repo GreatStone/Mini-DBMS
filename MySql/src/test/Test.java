@@ -26,8 +26,11 @@ public class Test {
 		Server server = new Server();
 		server.startServer();
 		test("use L_MiniDB;");
-		test("select userid+5 as x from user where username = \"root\";");
+		test("select * from user;");
+	//	test("insert into user values (2, \"greatstone\", \"wayward\" )");
+		test("select userid+2 as x, username from user;");
 		test("select * from user where username <> \"root\" or userid = 1;");
+		test("select * from user;");
 		server.stopServer();
 	}
 	public static void test (String sql){

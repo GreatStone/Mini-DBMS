@@ -16,22 +16,18 @@ public class SelectSet {
 	private List<String> aliasNames;
 	private ParseTree checkTree;
 	private List<DataRecord> tmp_result;
-	private List<String> result_name; // it's just a temporary name for
-										// tmp_result.
+	private List<String> result_name; // it's just a temporary name for tmp_result.
 	private DataTable result;
 	private int[] cur;
 	private boolean checked;
 	private List<ParseTree> selectTrees;
 	private boolean chooseAll;
-
-	public boolean isChooseAll() {
-		return chooseAll;
-	}
+	private boolean noWhere;
 
 	public void setChooseAll(boolean chooseAll) {
 		this.chooseAll = chooseAll;
 	}
-
+	
 	public SelectSet() {
 		tables = new ArrayList<DataTable>();
 		aliasNames = new ArrayList<String>();
@@ -43,6 +39,7 @@ public class SelectSet {
 		checked = false;
 		selectTrees = new ArrayList<ParseTree>();
 		chooseAll = false;
+		noWhere = true;
 	}
 
 	public DataTable getResult() throws Exception {
@@ -116,9 +113,14 @@ public class SelectSet {
 		AllCombine combine = new AllCombine(sizes);
 		while (combine.hasNext()) {
 			cur = combine.getNext();
-			visitTree((sqlParser.ExprContext) checkTree);
-			Boolean pass = (Boolean) ((ValueTree) checkTree).getValue()
+			Boolean pass;
+			if (noWhere){
+				pass = true;
+			} else{
+				visitTree((sqlParser.ExprContext) checkTree);
+				pass = (Boolean) ((ValueTree) checkTree).getValue()
 					.getValue();
+			}
 			if (pass) {
 				int sz = tmp_result.size();
 				tmp_result.add(new DataRecord());
@@ -233,7 +235,9 @@ public class SelectSet {
 	}
 
 	private void visitTree(sqlParser.ExprContext tree) throws Exception {
-		if (tree.getChildCount() == 1) {
+		if (tree.getChildCount() == 0){
+			return;
+		} else if (tree.getChildCount() == 1) {
 			visitTree((sqlParser.ValContext) tree.getChild(0));
 			tree.setValue(((ValueTree) tree.getChild(0)).getValue());
 		} else if (tree.getChild(1) instanceof sqlParser.OpContext) {
@@ -343,6 +347,9 @@ public class SelectSet {
 	
 	public void setCheckTree(ParseTree checkTree) {
 		this.checkTree = checkTree;
+		if (checkTree != null){
+			this.noWhere = false;
+		}
 	}
 
 	public List<DataTable> getTables() {

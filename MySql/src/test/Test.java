@@ -2,35 +2,46 @@ package test;
 
 import java.util.*;
 
-import DBMS.execute.SqlConsole;
+import javax.security.auth.x500.X500Principal;
 
+import DBMS.execute.SqlConsole;
 import com.db.minidb.sys.server.Server;
 
 public class Test {
 	public static void main (String[] args){
-		/*File __file = new File ("/home/greatstone/workspace/MySql/test.txt");
-		try {
-			Scanner scan = new Scanner(__file);
-			String sqls = "select t as a, b as ali from atable where t+2 not in (select x as xli from btable) and c < 2;";
-			while (scan.hasNextLine())
-			{
-				sqls += scan.nextLine() + " \n";
-			}
-			System.out.println("Prepare to parser :{\n" + sqls + "}");
-			sqlLexer lexer = new sqlLexer(new ANTLRInputStream(sqls));
-			sqlParser parser = new sqlParser(new CommonTokenStream(lexer));
-			test(parser.sqls());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
 		Server server = new Server();
 		server.startServer();
-		test("use L_MiniDB;");
-		test("select * from user;");
-	//	test("insert into user values (2, \"greatstone\", \"wayward\" )");
-		test("select userid+2 as x, username from user;");
-		test("select * from user where username <> \"root\" or userid = 1;");
-		test("select * from user;");
+		
+		String sqlString = "";
+		Scanner scan = new Scanner(System.in);
+		
+		Queue<String> sqlWait = new LinkedList<String>();
+		
+		try{
+			while (true){
+				while (sqlString.indexOf(";") == -1){
+					sqlString += scan.nextLine() + " ";
+				}
+				sqlString = sqlString.trim();
+				String[] __tmp = sqlString.split(";");
+				int len = __tmp.length;
+				if (sqlString.charAt(sqlString.length()-1) != ';'){
+					len--;
+					sqlString = __tmp[len];
+				} else{
+					sqlString = "";
+				}
+				for (int i = 0; i < len; i++){
+					sqlWait.offer(__tmp[i]);
+				}
+				while (!sqlWait.isEmpty()){
+					String e = sqlWait.poll();
+					test(e + ";");
+				}
+			}
+		} catch (Exception e) {
+		}
+		
 		server.stopServer();
 	}
 	public static void test (String sql){

@@ -6,12 +6,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import com.db.minidb.data.database.DataTable;
 import com.db.minidb.data.database.DataTableManager;
-import com.db.minidb.data.value.ValueBool;
 import com.db.minidb.dict.database.DictDatabaseInfo;
 import com.db.minidb.dict.database.DictTableInfo;
-import com.db.minidb.dict.type.TypeDataEnum;
-
-import DBMS.parser.ValueTree;
 import DBMS.parser.sqlParser;
 
 public class SelectConsole {
@@ -24,10 +20,13 @@ public class SelectConsole {
 		this.tree = null;
 		set = new SelectSet();
 		dbInfo = QueryInfo.get__dbInfo();
-		tableInfos = dbInfo.getTables();
 	}
 
 	public SelectSet execute() throws Exception {
+		if (QueryInfo.get__dbInfo() == null){
+			throw new Exception ("No choosed database");
+		}
+		tableInfos = dbInfo.getTables();
 		int i;
 		int len = tree.getChildCount();
 		if (! tree.getChild(1).getText().equals("*")) {
@@ -73,10 +72,6 @@ public class SelectConsole {
 		
 		set.getResult();
 		return this.set;
-	}
-
-	public void setSet(SelectSet set) {
-		this.set = set;
 	}
 
 	public void setTree(ParseTree tree) {

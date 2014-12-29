@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.v4.parse.ANTLRParser.throwsSpec_return;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import DBMS.parser.ValueTree;
@@ -47,7 +48,9 @@ public class InsertConsole {
 		}
 		try{
 			int i,j;
+			int cnt = 0;
 			for (i = 5,j = 0; i < len; i+=2,j++){
+				cnt++;
 				if (types.get(j).equals(TypeDataEnum.INT)){
 					ValueInt tmp = new ValueInt(TypeDataEnum.INT,((ValueTree)tree.getChild(i)).getValue().getValue());
 					record.getValues().add(tmp);
@@ -60,6 +63,9 @@ public class InsertConsole {
 				} else{
 					throw new Exception();
 				}
+			}
+			if (cnt != tableInfo.getColumnCount()){
+				throw new Exception();
 			}
 		} catch (Exception e) {
 			throw new Exception("Unavailable inserted data");

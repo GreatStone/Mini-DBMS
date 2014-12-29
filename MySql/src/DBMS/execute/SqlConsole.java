@@ -63,6 +63,17 @@ public class SqlConsole {
 						continue;
 					}
 					System.out.println("Succuess insert");
+				} else if (tree.getChild(i) instanceof sqlParser.Sql_deleteContext){
+					DeleteConsole __console = new DeleteConsole();
+					__console.setTree(tree.getChild(i));
+					int __effected = 0;
+					try{
+						__effected = __console.execute();
+					} catch (Exception e){
+						e.printStackTrace();
+						continue;
+					}
+					System.out.println(__effected + " rows had been effected.");
 				}
 				else {
 					// TODO;

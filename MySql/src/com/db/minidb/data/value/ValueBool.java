@@ -3,13 +3,11 @@ package com.db.minidb.data.value;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.antlr.v4.runtime.misc.Nullable;
-
 import com.db.minidb.dict.type.TypeDataEnum;
 import com.db.minidb.util.BinaryFileIOTool;
 
 public class ValueBool extends ValueBase {
-	
+
 	public ValueBool() {
 		super();
 	}
@@ -25,7 +23,7 @@ public class ValueBool extends ValueBase {
 	}
 
 	public void writeValue(OutputStream os) {
-	//BinaryFileIOTool.writeDouble((Double)this.value, os);
+		// BinaryFileIOTool.writeDouble((Double)this.value, os);
 	}
 
 	public String displayValue() {

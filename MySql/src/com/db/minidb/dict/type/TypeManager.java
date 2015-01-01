@@ -8,9 +8,11 @@ import com.db.minidb.util.BinaryFileIOTool;
 public class TypeManager {
 	private static Object lockObj = new Object();
 	private static TypeManager instance = new TypeManager();
+
 	private TypeManager() {
-		
+
 	}
+
 	public static TypeManager getInstance() {
 		return instance;
 	}
@@ -28,13 +30,15 @@ public class TypeManager {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//TODO
-			/*catch (InstantiationException | IllegalAccessException e) {
-				e.printStackTrace();
-			}*/
+			// TODO
+			/*
+			 * catch (InstantiationException | IllegalAccessException e) {
+			 * e.printStackTrace(); }
+			 */
 			return ret;
 		}
 	}
+
 	public static TypeBase readTypeFromStream(InputStream is) {
 		synchronized (lockObj) {
 			String type = BinaryFileIOTool.readString(is);
@@ -43,6 +47,7 @@ public class TypeManager {
 			return ret;
 		}
 	}
+
 	public static void writeTypeToStream(TypeBase type, OutputStream os) {
 		synchronized (lockObj) {
 			BinaryFileIOTool.writeString(type.getTypeEnum().name(), os);

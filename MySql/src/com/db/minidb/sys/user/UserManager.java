@@ -32,44 +32,56 @@ public class UserManager {
 	private static List<User> currentUsers = null;
 	private static int currentUserCount = -1;
 	private static int nextUserId = -1;
+
 	private UserManager() {
-		
+
 	}
+
 	public static UserManager getInstance() {
 		return instance;
 	}
+
 	public static int getUsernameMinLength() {
 		return usernameMinLength;
 	}
+
 	public static void setUsernameMinLength(int usernameMinLength) {
 		UserManager.usernameMinLength = usernameMinLength;
 	}
+
 	public static int getUsernameMaxLength() {
 		return usernameMaxLength;
 	}
+
 	public static void setUsernameMaxLength(int usernameMaxLength) {
 		UserManager.usernameMaxLength = usernameMaxLength;
 	}
+
 	public static int getPasswdMinLength() {
 		return passwdMinLength;
 	}
+
 	public static void setPasswdMinLength(int passwdMinLength) {
 		UserManager.passwdMinLength = passwdMinLength;
 	}
+
 	public static int getPasswdMaxLength() {
 		return passwdMaxLength;
 	}
+
 	public static void setPasswdMaxLength(int passwdMaxLength) {
 		UserManager.passwdMaxLength = passwdMaxLength;
 	}
-	public static void init(String path, String fname, int usernameMinLen, int usernameMaxLen, int passwdMinLen, int passwdMaxLen) {
+
+	public static void init(String path, String fname, int usernameMinLen,
+			int usernameMaxLen, int passwdMinLen, int passwdMaxLen) {
 		dictUserFile = FileTool.openFile(path, fname);
 		setUsernameMinLength(usernameMinLen);
 		setUsernameMaxLength(usernameMaxLen);
 		setPasswdMinLength(passwdMinLen);
 		setPasswdMaxLength(passwdMaxLen);
 	}
-	
+
 	private static User readUser(InputStream is) {
 		synchronized (lockObj) {
 			int userId = BinaryFileIOTool.readInt(is);
@@ -78,6 +90,7 @@ public class UserManager {
 			return new User(userId, username, passwd);
 		}
 	}
+
 	private static void storeUser(User user, OutputStream os) {
 		synchronized (lockObj) {
 			BinaryFileIOTool.writeInt(user.getUserId(), os);
@@ -85,27 +98,30 @@ public class UserManager {
 			BinaryFileIOTool.writeString(user.getPasswd(), os);
 		}
 	}
+
 	private static List<User> loadUsersAll(InputStream is) {
 		ArrayList<User> allUser = new ArrayList<User>();
 		User user = null;
 		synchronized (lockObj) {
 			int cnt = BinaryFileIOTool.readInt(is);
-			while(cnt-- > 0) {
+			while (cnt-- > 0) {
 				user = readUser(is);
 				allUser.add(user);
 			}
 			return allUser;
 		}
 	}
+
 	private static void storeUsersAll(List<User> users, OutputStream os) {
 		int cnt = users.size();
 		synchronized (lockObj) {
 			BinaryFileIOTool.writeInt(cnt, os);
-			for(User user : users) {
+			for (User user : users) {
 				storeUser(user, os);
 			}
 		}
 	}
+
 	private static void loadDictUserFile() {
 		FileInputStream fis = null;
 		try {
@@ -120,8 +136,9 @@ public class UserManager {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
+
 	private static void storeDictUserFile() {
 		FileOutputStream fos = null;
 		try {
@@ -135,29 +152,36 @@ public class UserManager {
 			e.printStackTrace();
 		}
 	}
+
 	public static User findUserWithUsername(String username) {
-		DictDatabaseInfo systemDatabase = DictCenterManager.findDatabaseWithName(PropertiesFileManager.getProperty("Dict_SystemDatabase"));
-		DictTableInfo systemUserTable = DictCenterManager.findTableWithName(systemDatabase, PropertiesFileManager.getProperty("Dict_SystemUserTable"));
+		DictDatabaseInfo systemDatabase = DictCenterManager
+				.findDatabaseWithName(PropertiesFileManager
+						.getProperty("Dict_SystemDatabase"));
+		DictTableInfo systemUserTable = DictCenterManager.findTableWithName(
+				systemDatabase,
+				PropertiesFileManager.getProperty("Dict_SystemUserTable"));
 		DataTable userTable = DataTableManager.loadTable(systemUserTable);
 		int usernameCol = -1, passwdCol = -1, userIdCol = -1;
-		for(int i = 0; i < userTable.getColumns().size(); i++) {
+		for (int i = 0; i < userTable.getColumns().size(); i++) {
 			DictColumnInfo col = userTable.getColumns().get(i);
-			if(col.getColumnName().equals("username")) {
+			if (col.getColumnName().equals("username")) {
 				usernameCol = i;
 			}
-			if(col.getColumnName().equals("passwd")) {
+			if (col.getColumnName().equals("passwd")) {
 				passwdCol = i;
 			}
-			if(col.getColumnName().equals("userid")) {
+			if (col.getColumnName().equals("userid")) {
 				userIdCol = i;
 			}
 		}
-		for(DataRecord record : userTable.getRecords()) {
-			if(record.getValues().get(usernameCol).getValue().equals(username)) {
-				//TODO ԭΪint
+		for (DataRecord record : userTable.getRecords()) {
+			if (record.getValues().get(usernameCol).getValue().equals(username)) {
+				// TODO ԭΪint
 				int id = (Integer) record.getValues().get(userIdCol).getValue();
-				String name = (String) record.getValues().get(usernameCol).getValue();
-				String passwd = (String) record.getValues().get(passwdCol).getValue();
+				String name = (String) record.getValues().get(usernameCol)
+						.getValue();
+				String passwd = (String) record.getValues().get(passwdCol)
+						.getValue();
 				return new User(id, name, passwd);
 			}
 		}

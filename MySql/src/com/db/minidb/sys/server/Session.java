@@ -12,21 +12,27 @@ public class Session {
 	private Socket currentClient;
 	private PrintWriter streamToClient;
 	private BufferedReader streamFromClient;
+
 	public User getCurrentUser() {
 		return currentUser;
 	}
+
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
+
 	public DictDatabaseInfo getCurrentDatabase() {
 		return currentDatabase;
 	}
+
 	public void setCurrentDatabase(DictDatabaseInfo currentDatabase) {
 		this.currentDatabase = currentDatabase;
 	}
+
 	public Socket getCurrentClient() {
 		return currentClient;
 	}
+
 	private void updateStreams() {
 		InputStream inStream = null;
 		OutputStream outStream = null;
@@ -44,15 +50,18 @@ public class Session {
 			this.streamToClient = ptWriter;
 		}
 	}
+
 	public void setCurrentClient(Socket currentClient) {
 		this.currentClient = currentClient;
 		this.updateStreams();
 	}
+
 	public PrintWriter getStreamToClient() {
 		return streamToClient;
 	}
+
 	public BufferedReader getStreamFromClient() {
 		return streamFromClient;
 	}
-	
+
 }

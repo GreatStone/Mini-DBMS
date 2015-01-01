@@ -6,6 +6,7 @@ public class LogSuccess extends LogInfoWithTime {
 	public LogSuccess(String msg) {
 		this(InfoTypeEnum.SUCCESS, msg);
 	}
+
 	private LogSuccess(InfoTypeEnum type, String msg) {
 		super(type, msg);
 	}

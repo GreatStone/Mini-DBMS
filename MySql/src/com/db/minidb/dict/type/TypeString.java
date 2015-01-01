@@ -8,33 +8,39 @@ import com.db.minidb.util.BinaryFileIOTool;
 public class TypeString extends TypeBase {
 	private int minLength;
 	private int maxLength;
+
 	public TypeString() {
 		this(TypeDataEnum.STRING);
 	}
+
 	public TypeString(TypeDataEnum type) {
 		super(type);
 		this.minLength = 0;
 		this.maxLength = Integer.MAX_VALUE;
 	}
+
 	public TypeString(TypeDataEnum type, int min, int max) {
 		super(type);
 		this.minLength = min;
 		this.maxLength = max;
 	}
-	
+
 	public int getMinLength() {
 		return minLength;
 	}
+
 	public void setMinLength(int minLength) {
 		this.minLength = minLength;
 	}
+
 	public int getMaxLength() {
 		return maxLength;
 	}
+
 	public void setMaxLength(int maxLength) {
 		this.maxLength = maxLength;
 	}
-	
+
 	public void readTypeInfo(InputStream is) {
 		this.minLength = BinaryFileIOTool.readInt(is);
 		this.maxLength = BinaryFileIOTool.readInt(is);
@@ -46,11 +52,10 @@ public class TypeString extends TypeBase {
 	}
 
 	public boolean isLegal(Object value) {
-		String v = (String)value;
-		if(v.length() < this.minLength || v.length() > this.maxLength) {
+		String v = (String) value;
+		if (v.length() < this.minLength || v.length() > this.maxLength) {
 			return false;
-		}
-		else {
+		} else {
 			return true;
 		}
 	}

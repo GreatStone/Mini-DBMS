@@ -36,7 +36,7 @@ public class DeleteConsole {
 	}
 
 	public int execute() throws Exception {
-		if (QueryInfo.get__dbInfo() == null){
+		if (QueryInfo.get__dbInfo() == null) {
 			throw new Exception("No choosed database");
 		}
 		String tableName = tree.getChild(2).getText();
@@ -47,15 +47,16 @@ public class DeleteConsole {
 			table = DataTableManager.loadTable(tableInfo);
 			int len = table.getRecords().size();
 			for (cur = 0; cur < len; cur++) {
-				visitTree((sqlParser.ExprContext)tree.getChild(3).getChild(1));
-				if (((ValueTree)tree.getChild(3).getChild(1)).getValue().getValue().equals(true)){
+				visitTree((sqlParser.ExprContext) tree.getChild(3).getChild(1));
+				if (((ValueTree) tree.getChild(3).getChild(1)).getValue()
+						.getValue().equals(true)) {
 					ret++;
-				} else{
+				} else {
 					resTable.getRecords().add(table.getRecords().get(cur));
 				}
 			}
 			table.setRecords(resTable.getRecords());
-		} else{
+		} else {
 			ret = table.getRecords().size();
 			table.getRecords().clear();
 		}
@@ -219,12 +220,13 @@ public class DeleteConsole {
 			int i;
 			for (i = 0; i < table.getColumns().size(); i++) {
 				if (table.getColumns().get(i).getColumnName().equals(Column)) {
-					ValueBase ret = table.getRecords().get(cur).getValues().get(i);
-					if (ret.getValue() instanceof String){
+					ValueBase ret = table.getRecords().get(cur).getValues()
+							.get(i);
+					if (ret.getValue() instanceof String) {
 						ret.setType(TypeDataEnum.STRING);
-					} else if (ret.getValue() instanceof Double){
+					} else if (ret.getValue() instanceof Double) {
 						ret.setType(TypeDataEnum.DOUBLE);
-					} else if (ret.getValue() instanceof Integer){
+					} else if (ret.getValue() instanceof Integer) {
 						ret.setType(TypeDataEnum.INT);
 					}
 					return ret;
@@ -238,12 +240,13 @@ public class DeleteConsole {
 			int i;
 			for (i = 0; i < table.getColumns().size(); i++) {
 				if (table.getColumns().get(i).getColumnName().equals(__tmp[1])) {
-					ValueBase ret = table.getRecords().get(cur).getValues().get(i);
-					if (ret.getValue() instanceof String){
+					ValueBase ret = table.getRecords().get(cur).getValues()
+							.get(i);
+					if (ret.getValue() instanceof String) {
 						ret.setType(TypeDataEnum.STRING);
-					} else if (ret.getValue() instanceof Double){
+					} else if (ret.getValue() instanceof Double) {
 						ret.setType(TypeDataEnum.DOUBLE);
-					} else if (ret.getValue() instanceof Integer){
+					} else if (ret.getValue() instanceof Integer) {
 						ret.setType(TypeDataEnum.INT);
 					}
 					return ret;

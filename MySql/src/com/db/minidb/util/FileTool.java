@@ -7,13 +7,15 @@ public class FileTool {
 		File dir = new File(parent, dirname);
 		return dir.getAbsolutePath();
 	}
+
 	public static String openFileFullPath(String path, String fname) {
 		File file = new File(path, fname);
 		return file.getAbsolutePath();
 	}
+
 	public static File openFile(String fname) {
 		File file = new File(fname);
-		if(!file.exists()) {
+		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
@@ -22,24 +24,27 @@ public class FileTool {
 		}
 		return file;
 	}
+
 	public static File openDirctory(String path) {
 		File dir = new File(path);
-		if(!dir.exists()) {
+		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		return dir;
 	}
+
 	public static File openDirctory(String parent, String dirname) {
 		File dir = new File(parent, dirname);
-		if(!dir.exists()) {
+		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		return dir;
 	}
+
 	public static File openFile(String path, String fname) {
 		File dir = openDirctory(path);
 		File file = new File(dir.getAbsolutePath(), fname);
-		if(!file.exists()) {
+		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
@@ -48,6 +53,7 @@ public class FileTool {
 		}
 		return file;
 	}
+
 	public static InputStream getInputStream(File file) {
 		FileInputStream fis = null;
 		try {
@@ -57,6 +63,7 @@ public class FileTool {
 		}
 		return fis;
 	}
+
 	public static OutputStream getOutputStream(File file) {
 		FileOutputStream fos = null;
 		try {

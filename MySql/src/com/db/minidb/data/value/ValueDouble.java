@@ -7,7 +7,7 @@ import com.db.minidb.dict.type.TypeDataEnum;
 import com.db.minidb.util.BinaryFileIOTool;
 
 public class ValueDouble extends ValueBase {
-	
+
 	public ValueDouble() {
 		super();
 	}
@@ -23,10 +23,10 @@ public class ValueDouble extends ValueBase {
 	}
 
 	public void writeValue(OutputStream os) {
-		BinaryFileIOTool.writeDouble((Double)this.value, os);
+		BinaryFileIOTool.writeDouble((Double) this.value, os);
 	}
 
 	public String displayValue() {
-		return String.format("%.6f", (Double)this.value);
+		return String.format("%.6f", (Double) this.value);
 	}
 }

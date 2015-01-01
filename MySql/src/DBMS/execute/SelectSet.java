@@ -16,7 +16,8 @@ public class SelectSet {
 	private List<String> aliasNames;
 	private ParseTree checkTree;
 	private List<DataRecord> tmp_result;
-	private List<String> result_name; // it's just a temporary name for tmp_result.
+	private List<String> result_name; // it's just a temporary name for
+										// tmp_result.
 	private DataTable result;
 	private int[] cur;
 	private boolean checked;
@@ -27,7 +28,7 @@ public class SelectSet {
 	public void setChooseAll(boolean chooseAll) {
 		this.chooseAll = chooseAll;
 	}
-	
+
 	public SelectSet() {
 		tables = new ArrayList<DataTable>();
 		aliasNames = new ArrayList<String>();
@@ -48,8 +49,11 @@ public class SelectSet {
 			int i, j;
 			for (i = 0; i < tables.size(); i++) {
 				for (j = 0; j < tables.get(i).getColumns().size(); j++) {
-					result_name.add(aliasNames.get(i)
-									+ "."+ tables.get(i).getColumns().get(j).getColumnName());
+					result_name
+							.add(aliasNames.get(i)
+									+ "."
+									+ tables.get(i).getColumns().get(j)
+											.getColumnName());
 				}
 			}
 			DataTable __table = new DataTable();
@@ -71,11 +75,13 @@ public class SelectSet {
 				for (i = 0; i < selectTrees.size(); i++) {
 					if (selectTrees.get(i).getChildCount() == 1) {
 						DictColumnInfo _colinfo = new DictColumnInfo();
-						_colinfo.setColumnName(selectTrees.get(i).getChild(0).getText());
+						_colinfo.setColumnName(selectTrees.get(i).getChild(0)
+								.getText());
 						result.getColumns().add(_colinfo);
 					} else {
 						DictColumnInfo _colinfo = new DictColumnInfo();
-						_colinfo.setColumnName(selectTrees.get(i).getChild(2).getText());
+						_colinfo.setColumnName(selectTrees.get(i).getChild(2)
+								.getText());
 						result.getColumns().add(_colinfo);
 					}
 				}
@@ -114,12 +120,11 @@ public class SelectSet {
 		while (combine.hasNext()) {
 			cur = combine.getNext();
 			Boolean pass;
-			if (noWhere){
+			if (noWhere) {
 				pass = true;
-			} else{
+			} else {
 				visitTree((sqlParser.ExprContext) checkTree);
-				pass = (Boolean) ((ValueTree) checkTree).getValue()
-					.getValue();
+				pass = (Boolean) ((ValueTree) checkTree).getValue().getValue();
 			}
 			if (pass) {
 				int sz = tmp_result.size();
@@ -195,7 +200,7 @@ public class SelectSet {
 
 	private void visitTree(sqlParser.Bool_valContext tree) throws Exception {
 		if (tree.getChildCount() == 1) {
-			visitTree((sqlParser.Sub_bool_valContext)tree.getChild(0));
+			visitTree((sqlParser.Sub_bool_valContext) tree.getChild(0));
 			tree.setValue(((sqlParser.Sub_bool_valContext) tree.getChild(0))
 					.getValue());
 		} else if (tree.getChildCount() == 3
@@ -235,7 +240,7 @@ public class SelectSet {
 	}
 
 	private void visitTree(sqlParser.ExprContext tree) throws Exception {
-		if (tree.getChildCount() == 0){
+		if (tree.getChildCount() == 0) {
 			return;
 		} else if (tree.getChildCount() == 1) {
 			visitTree((sqlParser.ValContext) tree.getChild(0));
@@ -288,19 +293,20 @@ public class SelectSet {
 		}
 	}
 
-	private ValueBase getColValue(String Column) throws Exception{
+	private ValueBase getColValue(String Column) throws Exception {
 		int i, j;
 		for (i = 0; i < tables.size(); i++) {
 			DataTable table = tables.get(i);
 			List<DictColumnInfo> tmpColomn = table.getColumns();
 			for (j = 0; j < tmpColomn.size(); j++) {
-				if (columnMatch(tmpColomn.get(j).getColumnName(),Column)) {
-					ValueBase ret = table.getRecords().get(cur[i]).getValues().get(j);
-					if (ret.getValue() instanceof Integer){
+				if (columnMatch(tmpColomn.get(j).getColumnName(), Column)) {
+					ValueBase ret = table.getRecords().get(cur[i]).getValues()
+							.get(j);
+					if (ret.getValue() instanceof Integer) {
 						ret.setType(TypeDataEnum.INT);
-					} else if (ret.getValue() instanceof Double){
+					} else if (ret.getValue() instanceof Double) {
 						ret.setType(TypeDataEnum.DOUBLE);
-					} else if (ret.getValue() instanceof String){
+					} else if (ret.getValue() instanceof String) {
 						ret.setType(TypeDataEnum.STRING);
 					}
 					return ret;
@@ -315,14 +321,15 @@ public class SelectSet {
 		}
 		Column = all[1];
 		for (j = 0; j < tables.get(i).getColumns().size(); j++) {
-			if (columnMatch(tables.get(i).getColumns().get(j).getColumnName(),Column)) {
-				ValueBase ret = tables.get(i).getRecords().get(cur[i]).getValues()
-						.get(j);
-				if (ret.getValue() instanceof Integer){
+			if (columnMatch(tables.get(i).getColumns().get(j).getColumnName(),
+					Column)) {
+				ValueBase ret = tables.get(i).getRecords().get(cur[i])
+						.getValues().get(j);
+				if (ret.getValue() instanceof Integer) {
 					ret.setType(TypeDataEnum.INT);
-				} else if (ret.getValue() instanceof Double){
+				} else if (ret.getValue() instanceof Double) {
 					ret.setType(TypeDataEnum.DOUBLE);
-				} else if (ret.getValue() instanceof String){
+				} else if (ret.getValue() instanceof String) {
 					ret.setType(TypeDataEnum.STRING);
 				}
 				return ret;
@@ -331,23 +338,23 @@ public class SelectSet {
 		throw new Exception("Fail to find column: " + Column);
 	}
 
-	private boolean columnMatch (String a, String b){
+	private boolean columnMatch(String a, String b) {
 		int _x = a.indexOf(".");
 		int _y = b.indexOf(".");
-		if (_x == -1 && _y == -1){
+		if (_x == -1 && _y == -1) {
 			return a.equals(b);
-		} else if (_x == -1){
+		} else if (_x == -1) {
 			return a.equals(b.split("\\.")[1]);
-		} else if (_y == -1){
+		} else if (_y == -1) {
 			return b.equals(a.split("\\.")[1]);
-		} else{
+		} else {
 			return a.equals(b);
 		}
 	}
-	
+
 	public void setCheckTree(ParseTree checkTree) {
 		this.checkTree = checkTree;
-		if (checkTree != null){
+		if (checkTree != null) {
 			this.noWhere = false;
 		}
 	}

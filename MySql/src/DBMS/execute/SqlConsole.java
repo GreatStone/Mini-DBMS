@@ -25,15 +25,20 @@ public class SqlConsole {
 			e.printStackTrace();
 			return;
 		}
-		
-		if (sqls.toLowerCase().replace(" ", "").replace("\n", "").equals("showdatabases;")){
-			for (int j = 0; j < DictCenterManager.getDatabaseList().getDatabaseCount(); j++){
-				System.out.println(DictCenterManager.getDatabaseList().getDatabases().get(j).getDatabaseName());
+
+		if (sqls.toLowerCase().replace(" ", "").replace("\n", "")
+				.equals("showdatabases;")) {
+			for (int j = 0; j < DictCenterManager.getDatabaseList()
+					.getDatabaseCount(); j++) {
+				System.out.println(DictCenterManager.getDatabaseList()
+						.getDatabases().get(j).getDatabaseName());
 			}
 			return;
-		} else if (sqls.toLowerCase().replace(" ", "").replace("\n", "").equals("showtables;")){
-			for (int j = 0; j < QueryInfo.get__dbInfo().getTableCount(); j++){
-				System.out.println(QueryInfo.get__dbInfo().getTables().get(j).getTableName());
+		} else if (sqls.toLowerCase().replace(" ", "").replace("\n", "")
+				.equals("showtables;")) {
+			for (int j = 0; j < QueryInfo.get__dbInfo().getTableCount(); j++) {
+				System.out.println(QueryInfo.get__dbInfo().getTables().get(j)
+						.getTableName());
 			}
 			return;
 		}
@@ -43,39 +48,35 @@ public class SqlConsole {
 				if (tree.getChild(i) instanceof sqlParser.Sql_selectContext) {
 					SelectConsole __console = new SelectConsole();
 					__console.setTree(tree.getChild(i));
-					String ret = DataTableManager.displayTable(__console.execute()
-							.getResult());
+					String ret = DataTableManager.displayTable(__console
+							.execute().getResult());
 					System.out.println(ret);
 				} else if (tree.getChild(i) instanceof sqlParser.Sql_useContext) {
 					QueryInfo.getInstance();
 					QueryInfo.chooseDB(tree.getChild(i).getChild(1).getText());
-					System.out.println("Chang current database to " + QueryInfo.get__dbInfo().getDatabaseName());
+					System.out.println("Chang current database to "
+							+ QueryInfo.get__dbInfo().getDatabaseName());
 				} else if (tree.getChild(i) instanceof sqlParser.Sql_create_databaseContext) {
 					DictCenterManager.getInstance();
-					DictCenterManager.addDatabase(tree.getChild(i).getChild(1).getText());
-				} else if (tree.getChild(i) instanceof sqlParser.Sql_insertContext){
+					DictCenterManager.addDatabase(tree.getChild(i).getChild(1)
+							.getText());
+				} else if (tree.getChild(i) instanceof sqlParser.Sql_insertContext) {
 					InsertConsole __console = new InsertConsole();
 					__console.setTree(tree.getChild(i));
-					try{
-						__console.execute();
-					} catch (Exception e) {
-						e.printStackTrace();
-						continue;
-					}
+					__console.execute();
 					System.out.println("Succuess insert");
-				} else if (tree.getChild(i) instanceof sqlParser.Sql_deleteContext){
+				} else if (tree.getChild(i) instanceof sqlParser.Sql_deleteContext) {
 					DeleteConsole __console = new DeleteConsole();
 					__console.setTree(tree.getChild(i));
 					int __effected = 0;
-					try{
-						__effected = __console.execute();
-					} catch (Exception e){
-						e.printStackTrace();
-						continue;
-					}
+					__effected = __console.execute();
 					System.out.println(__effected + " rows had been effected.");
-				}
-				else {
+				} else if (tree.getChild(i) instanceof sqlParser.Sql_create_tableContext) {
+					CreateConsole __console = new CreateConsole();
+					__console.setTree(tree.getChild(i));
+					__console.execute();
+					System.out.println("Succuess create");
+				} else {
 					// TODO;
 				}
 			}

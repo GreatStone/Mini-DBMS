@@ -10,18 +10,22 @@ public class ValueString extends ValueBase {
 	public ValueString() {
 		super();
 	}
+
 	public ValueString(TypeDataEnum type, Object value) {
 		super(type, value);
 	}
+
 	public ValueBase readValue(InputStream is) {
 		String v = BinaryFileIOTool.readString(is);
 		this.value = v;
 		return new ValueString(TypeDataEnum.STRING, v);
 	}
+
 	public void writeValue(OutputStream os) {
-		BinaryFileIOTool.writeString((String)this.value, os);
+		BinaryFileIOTool.writeString((String) this.value, os);
 	}
+
 	public String displayValue() {
-		return (String)this.value;
+		return (String) this.value;
 	}
 }

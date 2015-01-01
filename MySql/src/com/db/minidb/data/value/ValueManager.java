@@ -8,9 +8,11 @@ import com.db.minidb.util.BinaryFileIOTool;
 public class ValueManager {
 	private static Object lockObj = new Object();
 	private static ValueManager instance = new ValueManager();
+
 	private ValueManager() {
-		
+
 	}
+
 	public static ValueManager getInstance() {
 		return instance;
 	}
@@ -25,22 +27,25 @@ public class ValueManager {
 				ret = (ValueBase) nc.newInstance();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-			} catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			// TODO
-			/*catch (InstantiationException | IllegalAccessException e) {
-				e.printStackTrace();
-			}*/
+			/*
+			 * catch (InstantiationException | IllegalAccessException e) {
+			 * e.printStackTrace(); }
+			 */
 			return ret;
 		}
 	}
+
 	public static ValueBase readValueFromStream(ValueBase value, InputStream is) {
 		synchronized (lockObj) {
 			value.readValue(is);
 			return value;
 		}
 	}
+
 	public static void writeValueToStream(ValueBase type, OutputStream os) {
 		synchronized (lockObj) {
 			BinaryFileIOTool.writeString(type.toString(), os);

@@ -9,32 +9,39 @@ public class TypeLong extends TypeBase {
 
 	private long minValue;
 	private long maxValue;
+
 	public TypeLong() {
 		this(TypeDataEnum.LONG);
 	}
+
 	public TypeLong(TypeDataEnum type) {
 		super(type);
 		this.minValue = Long.MIN_VALUE;
 		this.maxValue = Long.MAX_VALUE;
 	}
+
 	public TypeLong(TypeDataEnum type, long min, long max) {
 		super(type);
 		this.minValue = min;
 		this.maxValue = max;
 	}
-	
+
 	public long getMinValue() {
 		return minValue;
 	}
+
 	public void setMinValue(long minValue) {
 		this.minValue = minValue;
 	}
+
 	public long getMaxValue() {
 		return maxValue;
 	}
+
 	public void setMaxValue(long maxValue) {
 		this.maxValue = maxValue;
 	}
+
 	public void readTypeInfo(InputStream is) {
 		this.minValue = BinaryFileIOTool.readLong(is);
 		this.maxValue = BinaryFileIOTool.readLong(is);
@@ -46,11 +53,10 @@ public class TypeLong extends TypeBase {
 	}
 
 	public boolean isLegal(Object value) {
-		long v = (Long)value;
-		if(v < this.minValue || v > this.maxValue) {
+		long v = (Long) value;
+		if (v < this.minValue || v > this.maxValue) {
 			return false;
-		}
-		else {
+		} else {
 			return true;
 		}
 	}

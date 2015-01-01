@@ -8,7 +8,7 @@ import DBMS.execute.*;
 }
            
 
-start: (sqls ';')+ EOF;
+start: (sqls ';')* EOF;
 
 sqls
 	:	sql_use
@@ -37,10 +37,19 @@ sql_create_database returns [ValueBase value]
 
 sql_create_table returns [ValueBase value]
 	:	KEY_CREATE KEY_TABLE table_name '('
-		colomn_name types ((KEY_NOT)? KEY_NULL)? (',' colomn_name types ((KEY_NOT)? KEY_NULL)? )*
-		(',' KEY_PRIMARY KEY_KEY ('('colomn_name (',' colomn_name)* ')'))?
-		(',' KEY_FOREIGN KEY_KEY colomn_name KEY_REFERENCES database_name colomn_name)?
+		col_type (',' col_type )*
+		(',' primary_col)?
+		(',' foreign_col)*
 		')' {System.out.println("SQL_CREATE_TABLE");};
+
+col_type
+	:	colomn_name types ((KEY_NOT)? KEY_NULL)?;
+
+primary_col
+	: 	KEY_PRIMARY KEY_KEY ('('colomn_name (',' colomn_name)* ')');
+
+foreign_col
+	:	KEY_FOREIGN KEY_KEY colomn_name KEY_REFERENCES table_name colomn_name;
 
 sql_select returns [SelectSet value]
 	:	KEY_SELECT colomns (',' colomns)* 
@@ -115,14 +124,15 @@ expr returns [ValueBase value]
 	|	(bool_val bool_op bool_val)
     ;
 
-colomn_name returns [ValueBase value] : x=IDENTIFIER{System.out.println("COLOMN_NAME");};
+colomn_name returns [ValueBase value] : x=IDENTIFIER{System.out.println("COLOMN_NAME");}
+                                          | (IDENTIFIER DOT IDENTIFIER);
 colomn_alias_name returns [ValueBase value] : x = IDENTIFIER {System.out.println("COLOMN_ALIAS_NAME");};
 table_name returns[String value] : x = IDENTIFIER{$value = new String ($x.text);};
 table_alias_name returns [String value] : x = IDENTIFIER{$value = new String($x.text);};
 database_name returns [String value] :  x= IDENTIFIER{$value =  new String($x.text);};
 type_int returns[ValueInt value] : x=INTIDENTI {$value = new ValueInt(TypeDataEnum.INT,new Integer($x.text));};
 type_double returns [ValueDouble value] : x=DOUBLEIDENTI {$value = new ValueDouble(TypeDataEnum.DOUBLE,new Double($x.text));};
-type_string returns [ValueString value] : x=STRINGIDENTI {$value = new ValueString(TypeDataEnum.STRING,new String($x.text));};
+type_string returns [ValueString value] : x=STRINGIDENTI {String __ = $x.text; $value = new ValueString(TypeDataEnum.STRING,__.substring(1,__.length()-1));};
 
 KEY_ALTER : A L T E R;
 KEY_AND	: A N D;
@@ -161,7 +171,7 @@ IDENTIFIER
 INTIDENTI
     : [0-9]+;
 DOUBLEIDENTI
-    :  ([O-9]+('.'[0-9])?)|(([0-9])*'.'[0-9]);
+    :  ([O-9]+('.'[0-9]*)?)|(([0-9])*'.'[0-9]+);
 STRINGIDENTI
     :   '"'[a-zA-Z0-9`~@#$%^&*()_-=+,.<>/?;:']*'"';
 

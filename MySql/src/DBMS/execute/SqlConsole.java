@@ -76,6 +76,23 @@ public class SqlConsole {
 					__console.setTree(tree.getChild(i));
 					__console.execute();
 					System.out.println("Succuess create");
+				} else if (tree.getChild(i) instanceof sqlParser.Sql_updateContext) {
+					UpdateConsole __console = new UpdateConsole();
+					ParseTree e = tree.getChild(i);
+					int __len = e.getChildCount();
+					__console.setTableName(e.getChild(1).getText());
+					for (int j = 3; j < __len; j += 2) {
+						if (e.getChild(j) instanceof sqlParser.Col_expContext) {
+							__console.addSet(e.getChild(j));
+						} else {
+							break;
+						}
+					}
+					if (e.getChild(__len - 1) instanceof sqlParser.Sql_whereContext) {
+						__console.setCheckTree(e.getChild(__len - 1)
+								.getChild(1));
+					}
+					__console.execute();
 				} else {
 					// TODO;
 				}

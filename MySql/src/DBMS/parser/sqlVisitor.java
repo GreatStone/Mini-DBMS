@@ -176,6 +176,15 @@ public interface sqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSql_where(@NotNull sqlParser.Sql_whereContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link sqlParser#col_exp}.
+	 * 
+	 * @param ctx
+	 *            the parse tree
+	 * @return the visitor result
+	 */
+	T visitCol_exp(@NotNull sqlParser.Col_expContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link sqlParser#op}.
 	 * 
 	 * @param ctx

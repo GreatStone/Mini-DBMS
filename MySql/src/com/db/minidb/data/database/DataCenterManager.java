@@ -21,9 +21,9 @@ public class DataCenterManager {
 		table.setTableId(tableId);
 		List<DataRecord> __tmp = new ArrayList<DataRecord>();
 		DataRecord e = new DataRecord();
-		e.getValues().add(new ValueInt(TypeDataEnum.INT,1));
-		e.getValues().add(new ValueDouble(TypeDataEnum.DOUBLE,3.14));
-		e.getValues().add(new ValueString(TypeDataEnum.STRING,"root"));
+		e.getValues().add(new ValueInt(TypeDataEnum.INT, 1));
+		e.getValues().add(new ValueDouble(TypeDataEnum.DOUBLE, 3.14));
+		e.getValues().add(new ValueString(TypeDataEnum.STRING, "root"));
 		table.setRecords(__tmp);
 		DataTableManager.writeDataTableToStream(table,
 				FileTool.getOutputStream(new File(name)));

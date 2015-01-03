@@ -115,7 +115,8 @@ public class DictCenterManager {
 			DictDatabaseManager.writeDatabaseInfoToFile(database, FileTool
 					.openFile(DictDatabaseManager
 							.getDatabaseDictFileFullPath(database)));
-			DataCenterManager.storeEmptyTable(table,database.getNextTableId()-1);
+			DataCenterManager.storeEmptyTable(table,
+					database.getNextTableId() - 1);
 			return true;
 		}
 	}

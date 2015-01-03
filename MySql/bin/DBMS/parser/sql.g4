@@ -6,7 +6,6 @@ import com.db.minidb.data.value.*;
 import com.db.minidb.dict.type.*;
 import DBMS.execute.*;
 }
-           
 
 start: (sqls ';')* EOF;
 
@@ -61,8 +60,11 @@ sql_insert returns [ValueBase value]
 		'(' consts (',' consts)* ')' {System.out.println("SQL_INSERT");};
 
 sql_update returns [ValueBase value]
-	:	KEY_INSERT KEY_SET colomns '=' expr (',' colomns '=' expr)
+        :	KEY_UPDATE table_name KEY_SET col_exp (',' col_exp)*
 		sql_where?{System.out.println("SQL_UPDATE");};
+
+col_exp returns [ValueBase value]
+	:	colomns EQ expr;
 
 sql_delete returns [ValueBase value]
 	:	KEY_DELETE KEY_FROM tables

@@ -115,16 +115,15 @@ sub_bool_val returns [ValueBase value]
 
 bool_val returns [ValueBase value]
     :   (sub_bool_val)
-        | (sub_bool_val bool_op sub_bool_val) 
-        | ((KEY_NOT)? KEY_EXISTS select_or_set)
-        | (val (KEY_NOT)? KEY_IN select_or_set);
+        | (sub_bool_val bool_op sub_bool_val) ;
 
 expr returns [ValueBase value]
 	:	val
 	|	(val op val)
 	|	(val compare val)
 	|	(bool_val bool_op bool_val)
-    ;
+	|	((KEY_NOT)? KEY_EXISTS select_or_set)
+    |	(val (KEY_NOT)? KEY_IN select_or_set);
 
 colomn_name returns [ValueBase value] : x=IDENTIFIER{System.out.println("COLOMN_NAME");}
                                           | (IDENTIFIER DOT IDENTIFIER);

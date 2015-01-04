@@ -316,13 +316,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public Database_nameContext database_name() {
@@ -377,13 +377,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public TerminalNode KEY_DROP() {
@@ -431,7 +431,7 @@ public class sqlParser extends Parser {
 				match(KEY_TABLE);
 				setState(100);
 				table_name();
-				System.out.println("sql_drop_table");
+				// System.out.println("sql_drop_table");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -448,13 +448,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public TerminalNode KEY_DROP() {
@@ -497,7 +497,7 @@ public class sqlParser extends Parser {
 				match(KEY_DROP);
 				setState(104);
 				database_name();
-				System.out.println("sql_drop_database");
+				// System.out.println("sql_drop_database");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -514,13 +514,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public Database_nameContext database_name() {
@@ -563,7 +563,7 @@ public class sqlParser extends Parser {
 				match(KEY_CREATE);
 				setState(108);
 				database_name();
-				System.out.println("SQLCREATEDATABASE");
+				// System.out.println("SQLCREATEDATABASE");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -580,13 +580,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public List<Foreign_colContext> foreign_col() {
@@ -707,7 +707,7 @@ public class sqlParser extends Parser {
 				}
 				setState(134);
 				match(CLOSE_PAR);
-				System.out.println("SQL_CREATE_TABLE");
+				// System.out.println("SQL_CREATE_TABLE");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -1055,7 +1055,7 @@ public class sqlParser extends Parser {
 					}
 				}
 
-				System.out.println("SQL_SELECT");
+				// System.out.println("SQL_SELECT");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -1072,13 +1072,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public List<ConstsContext> consts() {
@@ -1161,7 +1161,7 @@ public class sqlParser extends Parser {
 				}
 				setState(201);
 				match(CLOSE_PAR);
-				System.out.println("SQL_INSERT");
+				// System.out.println("SQL_INSERT");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -1178,13 +1178,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public List<Col_expContext> col_exp() {
@@ -1270,7 +1270,7 @@ public class sqlParser extends Parser {
 					}
 				}
 
-				System.out.println("SQL_UPDATE");
+				// System.out.println("SQL_UPDATE");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -1287,13 +1287,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public ExprContext expr() {
@@ -1354,13 +1354,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public Sql_whereContext sql_where() {
@@ -1420,7 +1420,7 @@ public class sqlParser extends Parser {
 					}
 				}
 
-				System.out.println("SQL_DELETE");
+				// System.out.println("SQL_DELETE");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -1437,13 +1437,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public TerminalNode KEY_WHERE() {
@@ -1484,7 +1484,7 @@ public class sqlParser extends Parser {
 					setState(233);
 					expr();
 				}
-				System.out.println("SQL_WHERE");
+				// System.out.println("SQL_WHERE");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -1547,7 +1547,7 @@ public class sqlParser extends Parser {
 					}
 				}
 
-				System.out.println("TABLES");
+				// System.out.println("TABLES");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -1659,13 +1659,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public Type_intContext x;
@@ -2153,13 +2153,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public OpContext op() {
@@ -2285,13 +2285,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public OpContext op() {
@@ -2369,13 +2369,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public CompareContext compare() {
@@ -2440,41 +2440,21 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
-		}
-
-		@Override
 		public ValueBase getValue() {
 			return this.value;
 		}
 
-		public ValContext val() {
-			return getRuleContext(ValContext.class, 0);
-		}
-
-		public TerminalNode KEY_NOT() {
-			return getToken(sqlParser.KEY_NOT, 0);
-		}
-
-		public TerminalNode KEY_EXISTS() {
-			return getToken(sqlParser.KEY_EXISTS, 0);
+		@Override
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public List<Sub_bool_valContext> sub_bool_val() {
 			return getRuleContexts(Sub_bool_valContext.class);
 		}
 
-		public TerminalNode KEY_IN() {
-			return getToken(sqlParser.KEY_IN, 0);
-		}
-
 		public Sub_bool_valContext sub_bool_val(int i) {
 			return getRuleContext(Sub_bool_valContext.class, i);
-		}
-
-		public Select_or_setContext select_or_set() {
-			return getRuleContext(Select_or_setContext.class, 0);
 		}
 
 		public Bool_opContext bool_op() {
@@ -2502,10 +2482,9 @@ public class sqlParser extends Parser {
 	public final Bool_valContext bool_val() throws RecognitionException {
 		Bool_valContext _localctx = new Bool_valContext(_ctx, getState());
 		enterRule(_localctx, 54, RULE_bool_val);
-		int _la;
 		try {
-			setState(347);
-			switch (getInterpreter().adaptivePredict(_input, 30, _ctx)) {
+			setState(335);
+			switch (getInterpreter().adaptivePredict(_input, 28, _ctx)) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
@@ -2529,50 +2508,6 @@ public class sqlParser extends Parser {
 					}
 				}
 				break;
-
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
-					{
-						setState(336);
-						_la = _input.LA(1);
-						if (_la == KEY_NOT) {
-							{
-								setState(335);
-								match(KEY_NOT);
-							}
-						}
-
-						setState(338);
-						match(KEY_EXISTS);
-						setState(339);
-						select_or_set();
-					}
-				}
-				break;
-
-			case 4:
-				enterOuterAlt(_localctx, 4);
-				{
-					{
-						setState(340);
-						val();
-						setState(342);
-						_la = _input.LA(1);
-						if (_la == KEY_NOT) {
-							{
-								setState(341);
-								match(KEY_NOT);
-							}
-						}
-
-						setState(344);
-						match(KEY_IN);
-						setState(345);
-						select_or_set();
-					}
-				}
-				break;
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -2589,13 +2524,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public CompareContext compare() {
@@ -2606,8 +2541,16 @@ public class sqlParser extends Parser {
 			return getRuleContexts(ValContext.class);
 		}
 
+		public TerminalNode KEY_NOT() {
+			return getToken(sqlParser.KEY_NOT, 0);
+		}
+
 		public Bool_valContext bool_val(int i) {
 			return getRuleContext(Bool_valContext.class, i);
+		}
+
+		public TerminalNode KEY_EXISTS() {
+			return getToken(sqlParser.KEY_EXISTS, 0);
 		}
 
 		public OpContext op() {
@@ -2618,8 +2561,16 @@ public class sqlParser extends Parser {
 			return getRuleContext(ValContext.class, i);
 		}
 
+		public TerminalNode KEY_IN() {
+			return getToken(sqlParser.KEY_IN, 0);
+		}
+
 		public List<Bool_valContext> bool_val() {
 			return getRuleContexts(Bool_valContext.class);
+		}
+
+		public Select_or_setContext select_or_set() {
+			return getRuleContext(Select_or_setContext.class, 0);
 		}
 
 		public Bool_opContext bool_op() {
@@ -2647,13 +2598,14 @@ public class sqlParser extends Parser {
 	public final ExprContext expr() throws RecognitionException {
 		ExprContext _localctx = new ExprContext(_ctx, getState());
 		enterRule(_localctx, 56, RULE_expr);
+		int _la;
 		try {
 			setState(362);
 			switch (getInterpreter().adaptivePredict(_input, 31, _ctx)) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-					setState(349);
+					setState(337);
 					val();
 				}
 				break;
@@ -2662,11 +2614,11 @@ public class sqlParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 					{
-						setState(350);
+						setState(338);
 						val();
-						setState(351);
+						setState(339);
 						op();
-						setState(352);
+						setState(340);
 						val();
 					}
 				}
@@ -2676,11 +2628,11 @@ public class sqlParser extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 					{
-						setState(354);
+						setState(342);
 						val();
-						setState(355);
+						setState(343);
 						compare();
-						setState(356);
+						setState(344);
 						val();
 					}
 				}
@@ -2690,12 +2642,56 @@ public class sqlParser extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 					{
-						setState(358);
+						setState(346);
 						bool_val();
-						setState(359);
+						setState(347);
 						bool_op();
-						setState(360);
+						setState(348);
 						bool_val();
+					}
+				}
+				break;
+
+			case 5:
+				enterOuterAlt(_localctx, 5);
+				{
+					{
+						setState(351);
+						_la = _input.LA(1);
+						if (_la == KEY_NOT) {
+							{
+								setState(350);
+								match(KEY_NOT);
+							}
+						}
+
+						setState(353);
+						match(KEY_EXISTS);
+						setState(354);
+						select_or_set();
+					}
+				}
+				break;
+
+			case 6:
+				enterOuterAlt(_localctx, 6);
+				{
+					{
+						setState(355);
+						val();
+						setState(357);
+						_la = _input.LA(1);
+						if (_la == KEY_NOT) {
+							{
+								setState(356);
+								match(KEY_NOT);
+							}
+						}
+
+						setState(359);
+						match(KEY_IN);
+						setState(360);
+						select_or_set();
 					}
 				}
 				break;
@@ -2715,13 +2711,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public Token x;
@@ -2768,7 +2764,7 @@ public class sqlParser extends Parser {
 				{
 					setState(364);
 					((Colomn_nameContext) _localctx).x = match(IDENTIFIER);
-					System.out.println("COLOMN_NAME");
+					// System.out.println("COLOMN_NAME");
 				}
 				break;
 
@@ -2801,13 +2797,13 @@ public class sqlParser extends Parser {
 		public ValueBase value;
 
 		@Override
-		public void setValue(ValueBase value) {
-			this.value = value;
+		public ValueBase getValue() {
+			return this.value;
 		}
 
 		@Override
-		public ValueBase getValue() {
-			return this.value;
+		public void setValue(ValueBase value) {
+			this.value = value;
 		}
 
 		public Token x;
@@ -2846,7 +2842,7 @@ public class sqlParser extends Parser {
 			{
 				setState(371);
 				((Colomn_alias_nameContext) _localctx).x = match(IDENTIFIER);
-				System.out.println("COLOMN_ALIAS_NAME");
+				// System.out.println("COLOMN_ALIAS_NAME");
 			}
 		} catch (RecognitionException re) {
 			_localctx.exception = re;
@@ -3010,8 +3006,19 @@ public class sqlParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Type_intContext extends ParserRuleContext {
+	public static class Type_intContext extends ParserRuleContext implements
+			ValueTree {
 		public ValueInt value;
+
+		@Override
+		public void setValue(ValueBase value) {
+			this.value = (ValueInt) value;
+		}
+
+		public ValueBase getValue() {
+			return this.value;
+		}
+
 		public Token x;
 
 		public TerminalNode INTIDENTI() {
@@ -3060,8 +3067,20 @@ public class sqlParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Type_doubleContext extends ParserRuleContext {
+	public static class Type_doubleContext extends ParserRuleContext implements
+			ValueTree {
 		public ValueDouble value;
+
+		@Override
+		public void setValue(ValueBase value) {
+			this.value = (ValueDouble) value;
+		}
+
+		@Override
+		public ValueBase getValue() {
+			return this.value;
+		}
+
 		public Token x;
 
 		public TerminalNode DOUBLEIDENTI() {
@@ -3111,8 +3130,20 @@ public class sqlParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Type_stringContext extends ParserRuleContext {
+	public static class Type_stringContext extends ParserRuleContext implements
+			ValueTree {
 		public ValueString value;
+
+		@Override
+		public void setValue(ValueBase value) {
+			this.value = (ValueString) value;
+		}
+
+		@Override
+		public ValueBase getValue() {
+			return this.value;
+		}
+
 		public Token x;
 
 		public TerminalNode STRINGIDENTI() {
@@ -3186,44 +3217,44 @@ public class sqlParser extends Parser {
 			+ "\n\31\7\31\u012c\n\31\f\31\16\31\u012f\13\31\3\31\3\31\5\31\u0133\n\31"
 			+ "\3\32\3\32\3\32\3\32\5\32\u0139\n\32\3\32\3\32\3\32\5\32\u013e\n\32\5"
 			+ "\32\u0140\n\32\3\33\3\33\3\33\3\33\3\33\5\33\u0147\n\33\3\34\3\34\3\34"
-			+ "\3\34\3\35\3\35\3\35\3\35\3\35\3\35\5\35\u0153\n\35\3\35\3\35\3\35\3\35"
-			+ "\5\35\u0159\n\35\3\35\3\35\3\35\5\35\u015e\n\35\3\36\3\36\3\36\3\36\3"
-			+ "\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\5\36\u016d\n\36\3\37\3\37"
-			+ "\3\37\3\37\3\37\5\37\u0174\n\37\3 \3 \3 \3!\3!\3!\3\"\3\"\3\"\3#\3#\3"
-			+ "#\3$\3$\3$\3%\3%\3%\3&\3&\3&\3&\2\'\2\4\6\b\n\f\16\20\22\24\26\30\32\34"
-			+ "\36 \"$&(*,.\60\62\64\668:<>@BDFHJ\2\5\3\29>\4\2\4\4\27\27\4\2.\60\63"
-			+ "\63\u0197\2Q\3\2\2\2\4_\3\2\2\2\6a\3\2\2\2\bd\3\2\2\2\ni\3\2\2\2\fm\3"
-			+ "\2\2\2\16q\3\2\2\2\20\u008b\3\2\2\2\22\u0093\3\2\2\2\24\u00a0\3\2\2\2"
-			+ "\26\u00a7\3\2\2\2\30\u00be\3\2\2\2\32\u00ce\3\2\2\2\34\u00de\3\2\2\2\36"
-			+ "\u00e2\3\2\2\2 \u00ea\3\2\2\2\"\u00ef\3\2\2\2$\u0100\3\2\2\2&\u010b\3"
-			+ "\2\2\2(\u0113\3\2\2\2*\u0115\3\2\2\2,\u0117\3\2\2\2.\u0119\3\2\2\2\60"
-			+ "\u0132\3\2\2\2\62\u013f\3\2\2\2\64\u0146\3\2\2\2\66\u0148\3\2\2\28\u015d"
-			+ "\3\2\2\2:\u016c\3\2\2\2<\u0173\3\2\2\2>\u0175\3\2\2\2@\u0178\3\2\2\2B"
-			+ "\u017b\3\2\2\2D\u017e\3\2\2\2F\u0181\3\2\2\2H\u0184\3\2\2\2J\u0187\3\2"
-			+ "\2\2LM\5\4\3\2MN\7)\2\2NP\3\2\2\2OL\3\2\2\2PS\3\2\2\2QO\3\2\2\2QR\3\2"
-			+ "\2\2RT\3\2\2\2SQ\3\2\2\2TU\7\2\2\3U\3\3\2\2\2V`\5\6\4\2W`\5\b\5\2X`\5"
-			+ "\n\6\2Y`\5\f\7\2Z`\5\16\b\2[`\5\26\f\2\\`\5\30\r\2]`\5\32\16\2^`\5\36"
-			+ "\20\2_V\3\2\2\2_W\3\2\2\2_X\3\2\2\2_Y\3\2\2\2_Z\3\2\2\2_[\3\2\2\2_\\\3"
-			+ "\2\2\2_]\3\2\2\2_^\3\2\2\2`\5\3\2\2\2ab\7\37\2\2bc\5D#\2c\7\3\2\2\2de"
-			+ "\7\n\2\2ef\7\35\2\2fg\5@!\2gh\b\5\1\2h\t\3\2\2\2ij\7\n\2\2jk\5D#\2kl\b"
-			+ "\6\1\2l\13\3\2\2\2mn\7\6\2\2no\5D#\2op\b\7\1\2p\r\3\2\2\2qr\7\6\2\2rs"
-			+ "\7\35\2\2st\5@!\2tu\7+\2\2uz\5\20\t\2vw\7-\2\2wy\5\20\t\2xv\3\2\2\2y|"
-			+ "\3\2\2\2zx\3\2\2\2z{\3\2\2\2{\177\3\2\2\2|z\3\2\2\2}~\7-\2\2~\u0080\5"
-			+ "\22\n\2\177}\3\2\2\2\177\u0080\3\2\2\2\u0080\u0085\3\2\2\2\u0081\u0082"
-			+ "\7-\2\2\u0082\u0084\5\24\13\2\u0083\u0081\3\2\2\2\u0084\u0087\3\2\2\2"
-			+ "\u0085\u0083\3\2\2\2\u0085\u0086\3\2\2\2\u0086\u0088\3\2\2\2\u0087\u0085"
-			+ "\3\2\2\2\u0088\u0089\7,\2\2\u0089\u008a\b\b\1\2\u008a\17\3\2\2\2\u008b"
-			+ "\u008c\5<\37\2\u008c\u0091\5(\25\2\u008d\u008f\7\24\2\2\u008e\u008d\3"
-			+ "\2\2\2\u008e\u008f\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0092\7\25\2\2\u0091"
-			+ "\u008e\3\2\2\2\u0091\u0092\3\2\2\2\u0092\21\3\2\2\2\u0093\u0094\7\30\2"
-			+ "\2\u0094\u0095\7\23\2\2\u0095\u0096\7+\2\2\u0096\u009b\5<\37\2\u0097\u0098"
-			+ "\7-\2\2\u0098\u009a\5<\37\2\u0099\u0097\3\2\2\2\u009a\u009d\3\2\2\2\u009b"
-			+ "\u0099\3\2\2\2\u009b\u009c\3\2\2\2\u009c\u009e\3\2\2\2\u009d\u009b\3\2"
-			+ "\2\2\u009e\u009f\7,\2\2\u009f\23\3\2\2\2\u00a0\u00a1\7\f\2\2\u00a1\u00a2"
-			+ "\7\23\2\2\u00a2\u00a3\5<\37\2\u00a3\u00a4\7\31\2\2\u00a4\u00a5\5@!\2\u00a5"
-			+ "\u00a6\5<\37\2\u00a6\25\3\2\2\2\u00a7\u00a8\7\32\2\2\u00a8\u00ad\5$\23"
-			+ "\2\u00a9\u00aa\7-\2\2\u00aa\u00ac\5$\23\2\u00ab\u00a9\3\2\2\2\u00ac\u00af"
-			+ "\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae\u00b0\3\2\2\2\u00af"
+			+ "\3\34\3\35\3\35\3\35\3\35\3\35\5\35\u0152\n\35\3\36\3\36\3\36\3\36\3\36"
+			+ "\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\5\36\u0162\n\36\3\36\3\36"
+			+ "\3\36\3\36\5\36\u0168\n\36\3\36\3\36\3\36\5\36\u016d\n\36\3\37\3\37\3"
+			+ "\37\3\37\3\37\5\37\u0174\n\37\3 \3 \3 \3!\3!\3!\3\"\3\"\3\"\3#\3#\3#\3"
+			+ "$\3$\3$\3%\3%\3%\3&\3&\3&\3&\2\'\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36"
+			+ " \"$&(*,.\60\62\64\668:<>@BDFHJ\2\5\3\29>\4\2\4\4\27\27\4\2.\60\63\63"
+			+ "\u0197\2Q\3\2\2\2\4_\3\2\2\2\6a\3\2\2\2\bd\3\2\2\2\ni\3\2\2\2\fm\3\2\2"
+			+ "\2\16q\3\2\2\2\20\u008b\3\2\2\2\22\u0093\3\2\2\2\24\u00a0\3\2\2\2\26\u00a7"
+			+ "\3\2\2\2\30\u00be\3\2\2\2\32\u00ce\3\2\2\2\34\u00de\3\2\2\2\36\u00e2\3"
+			+ "\2\2\2 \u00ea\3\2\2\2\"\u00ef\3\2\2\2$\u0100\3\2\2\2&\u010b\3\2\2\2(\u0113"
+			+ "\3\2\2\2*\u0115\3\2\2\2,\u0117\3\2\2\2.\u0119\3\2\2\2\60\u0132\3\2\2\2"
+			+ "\62\u013f\3\2\2\2\64\u0146\3\2\2\2\66\u0148\3\2\2\28\u0151\3\2\2\2:\u016c"
+			+ "\3\2\2\2<\u0173\3\2\2\2>\u0175\3\2\2\2@\u0178\3\2\2\2B\u017b\3\2\2\2D"
+			+ "\u017e\3\2\2\2F\u0181\3\2\2\2H\u0184\3\2\2\2J\u0187\3\2\2\2LM\5\4\3\2"
+			+ "MN\7)\2\2NP\3\2\2\2OL\3\2\2\2PS\3\2\2\2QO\3\2\2\2QR\3\2\2\2RT\3\2\2\2"
+			+ "SQ\3\2\2\2TU\7\2\2\3U\3\3\2\2\2V`\5\6\4\2W`\5\b\5\2X`\5\n\6\2Y`\5\f\7"
+			+ "\2Z`\5\16\b\2[`\5\26\f\2\\`\5\30\r\2]`\5\32\16\2^`\5\36\20\2_V\3\2\2\2"
+			+ "_W\3\2\2\2_X\3\2\2\2_Y\3\2\2\2_Z\3\2\2\2_[\3\2\2\2_\\\3\2\2\2_]\3\2\2"
+			+ "\2_^\3\2\2\2`\5\3\2\2\2ab\7\37\2\2bc\5D#\2c\7\3\2\2\2de\7\n\2\2ef\7\35"
+			+ "\2\2fg\5@!\2gh\b\5\1\2h\t\3\2\2\2ij\7\n\2\2jk\5D#\2kl\b\6\1\2l\13\3\2"
+			+ "\2\2mn\7\6\2\2no\5D#\2op\b\7\1\2p\r\3\2\2\2qr\7\6\2\2rs\7\35\2\2st\5@"
+			+ "!\2tu\7+\2\2uz\5\20\t\2vw\7-\2\2wy\5\20\t\2xv\3\2\2\2y|\3\2\2\2zx\3\2"
+			+ "\2\2z{\3\2\2\2{\177\3\2\2\2|z\3\2\2\2}~\7-\2\2~\u0080\5\22\n\2\177}\3"
+			+ "\2\2\2\177\u0080\3\2\2\2\u0080\u0085\3\2\2\2\u0081\u0082\7-\2\2\u0082"
+			+ "\u0084\5\24\13\2\u0083\u0081\3\2\2\2\u0084\u0087\3\2\2\2\u0085\u0083\3"
+			+ "\2\2\2\u0085\u0086\3\2\2\2\u0086\u0088\3\2\2\2\u0087\u0085\3\2\2\2\u0088"
+			+ "\u0089\7,\2\2\u0089\u008a\b\b\1\2\u008a\17\3\2\2\2\u008b\u008c\5<\37\2"
+			+ "\u008c\u0091\5(\25\2\u008d\u008f\7\24\2\2\u008e\u008d\3\2\2\2\u008e\u008f"
+			+ "\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0092\7\25\2\2\u0091\u008e\3\2\2\2"
+			+ "\u0091\u0092\3\2\2\2\u0092\21\3\2\2\2\u0093\u0094\7\30\2\2\u0094\u0095"
+			+ "\7\23\2\2\u0095\u0096\7+\2\2\u0096\u009b\5<\37\2\u0097\u0098\7-\2\2\u0098"
+			+ "\u009a\5<\37\2\u0099\u0097\3\2\2\2\u009a\u009d\3\2\2\2\u009b\u0099\3\2"
+			+ "\2\2\u009b\u009c\3\2\2\2\u009c\u009e\3\2\2\2\u009d\u009b\3\2\2\2\u009e"
+			+ "\u009f\7,\2\2\u009f\23\3\2\2\2\u00a0\u00a1\7\f\2\2\u00a1\u00a2\7\23\2"
+			+ "\2\u00a2\u00a3\5<\37\2\u00a3\u00a4\7\31\2\2\u00a4\u00a5\5@!\2\u00a5\u00a6"
+			+ "\5<\37\2\u00a6\25\3\2\2\2\u00a7\u00a8\7\32\2\2\u00a8\u00ad\5$\23\2\u00a9"
+			+ "\u00aa\7-\2\2\u00aa\u00ac\5$\23\2\u00ab\u00a9\3\2\2\2\u00ac\u00af\3\2"
+			+ "\2\2\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae\u00b0\3\2\2\2\u00af"
 			+ "\u00ad\3\2\2\2\u00b0\u00b1\7\r\2\2\u00b1\u00b6\5\"\22\2\u00b2\u00b3\7"
 			+ "-\2\2\u00b3\u00b5\5\"\22\2\u00b4\u00b2\3\2\2\2\u00b5\u00b8\3\2\2\2\u00b6"
 			+ "\u00b4\3\2\2\2\u00b6\u00b7\3\2\2\2\u00b7\u00ba\3\2\2\2\u00b8\u00b6\3\2"
@@ -3274,19 +3305,19 @@ public class sqlParser extends Parser {
 			+ "\5\62\32\2\u0142\u0143\5\62\32\2\u0143\u0144\5.\30\2\u0144\u0145\5\62"
 			+ "\32\2\u0145\u0147\3\2\2\2\u0146\u0141\3\2\2\2\u0146\u0142\3\2\2\2\u0147"
 			+ "\65\3\2\2\2\u0148\u0149\5\64\33\2\u0149\u014a\5*\26\2\u014a\u014b\5\64"
-			+ "\33\2\u014b\67\3\2\2\2\u014c\u015e\5\66\34\2\u014d\u014e\5\66\34\2\u014e"
-			+ "\u014f\5,\27\2\u014f\u0150\5\66\34\2\u0150\u015e\3\2\2\2\u0151\u0153\7"
-			+ "\24\2\2\u0152\u0151\3\2\2\2\u0152\u0153\3\2\2\2\u0153\u0154\3\2\2\2\u0154"
-			+ "\u0155\7\13\2\2\u0155\u015e\5\60\31\2\u0156\u0158\5\64\33\2\u0157\u0159"
-			+ "\7\24\2\2\u0158\u0157\3\2\2\2\u0158\u0159\3\2\2\2\u0159\u015a\3\2\2\2"
-			+ "\u015a\u015b\7\17\2\2\u015b\u015c\5\60\31\2\u015c\u015e\3\2\2\2\u015d"
-			+ "\u014c\3\2\2\2\u015d\u014d\3\2\2\2\u015d\u0152\3\2\2\2\u015d\u0156\3\2"
-			+ "\2\2\u015e9\3\2\2\2\u015f\u016d\5\64\33\2\u0160\u0161\5\64\33\2\u0161"
-			+ "\u0162\5.\30\2\u0162\u0163\5\64\33\2\u0163\u016d\3\2\2\2\u0164\u0165\5"
-			+ "\64\33\2\u0165\u0166\5*\26\2\u0166\u0167\5\64\33\2\u0167\u016d\3\2\2\2"
-			+ "\u0168\u0169\58\35\2\u0169\u016a\5,\27\2\u016a\u016b\58\35\2\u016b\u016d"
-			+ "\3\2\2\2\u016c\u015f\3\2\2\2\u016c\u0160\3\2\2\2\u016c\u0164\3\2\2\2\u016c"
-			+ "\u0168\3\2\2\2\u016d;\3\2\2\2\u016e\u016f\7\"\2\2\u016f\u0174\b\37\1\2"
+			+ "\33\2\u014b\67\3\2\2\2\u014c\u0152\5\66\34\2\u014d\u014e\5\66\34\2\u014e"
+			+ "\u014f\5,\27\2\u014f\u0150\5\66\34\2\u0150\u0152\3\2\2\2\u0151\u014c\3"
+			+ "\2\2\2\u0151\u014d\3\2\2\2\u01529\3\2\2\2\u0153\u016d\5\64\33\2\u0154"
+			+ "\u0155\5\64\33\2\u0155\u0156\5.\30\2\u0156\u0157\5\64\33\2\u0157\u016d"
+			+ "\3\2\2\2\u0158\u0159\5\64\33\2\u0159\u015a\5*\26\2\u015a\u015b\5\64\33"
+			+ "\2\u015b\u016d\3\2\2\2\u015c\u015d\58\35\2\u015d\u015e\5,\27\2\u015e\u015f"
+			+ "\58\35\2\u015f\u016d\3\2\2\2\u0160\u0162\7\24\2\2\u0161\u0160\3\2\2\2"
+			+ "\u0161\u0162\3\2\2\2\u0162\u0163\3\2\2\2\u0163\u0164\7\13\2\2\u0164\u016d"
+			+ "\5\60\31\2\u0165\u0167\5\64\33\2\u0166\u0168\7\24\2\2\u0167\u0166\3\2"
+			+ "\2\2\u0167\u0168\3\2\2\2\u0168\u0169\3\2\2\2\u0169\u016a\7\17\2\2\u016a"
+			+ "\u016b\5\60\31\2\u016b\u016d\3\2\2\2\u016c\u0153\3\2\2\2\u016c\u0154\3"
+			+ "\2\2\2\u016c\u0158\3\2\2\2\u016c\u015c\3\2\2\2\u016c\u0161\3\2\2\2\u016c"
+			+ "\u0165\3\2\2\2\u016d;\3\2\2\2\u016e\u016f\7\"\2\2\u016f\u0174\b\37\1\2"
 			+ "\u0170\u0171\7\"\2\2\u0171\u0172\7*\2\2\u0172\u0174\7\"\2\2\u0173\u016e"
 			+ "\3\2\2\2\u0173\u0170\3\2\2\2\u0174=\3\2\2\2\u0175\u0176\7\"\2\2\u0176"
 			+ "\u0177\b \1\2\u0177?\3\2\2\2\u0178\u0179\7\"\2\2\u0179\u017a\b!\1\2\u017a"
@@ -3296,7 +3327,7 @@ public class sqlParser extends Parser {
 			+ "I\3\2\2\2\u0187\u0188\7%\2\2\u0188\u0189\b&\1\2\u0189K\3\2\2\2#Q_z\177"
 			+ "\u0085\u008e\u0091\u009b\u00ad\u00b6\u00ba\u00c8\u00d6\u00da\u00e6\u00f2"
 			+ "\u00f9\u0100\u010b\u0113\u0123\u0129\u012d\u0132\u0138\u013d\u013f\u0146"
-			+ "\u0152\u0158\u015d\u016c\u0173";
+			+ "\u0151\u0161\u0167\u016c\u0173";
 	public static final ATN _ATN = ATNSimulator.deserialize(_serializedATN
 			.toCharArray());
 	static {

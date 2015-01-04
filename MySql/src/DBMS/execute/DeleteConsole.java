@@ -3,7 +3,6 @@ package DBMS.execute;
 import java.util.ArrayList;
 import java.util.List;
 import org.antlr.v4.runtime.tree.ParseTree;
-import DBMS.execute.Calculate;
 import DBMS.execute.QueryInfo;
 import DBMS.parser.ValueTree;
 import DBMS.parser.sqlParser;
@@ -16,13 +15,15 @@ import com.db.minidb.dict.database.DictCenterManager;
 import com.db.minidb.dict.database.DictTableInfo;
 import com.db.minidb.dict.type.TypeDataEnum;
 
-public class DeleteConsole {
+public class DeleteConsole implements ExecuteConsole {
 	private ParseTree tree;
 	private DataTable table;
 	private int cur;
 	private DictTableInfo tableInfo;
 	private DataTable resTable;
 	private boolean chooseAll;
+
+	private TreeVisitor visitor;
 
 	public DeleteConsole() {
 		tree = null;
@@ -33,6 +34,7 @@ public class DeleteConsole {
 		resTable = new DataTable();
 		List<DataRecord> __tmp = new ArrayList<DataRecord>();
 		resTable.setRecords(__tmp);
+		visitor = new TreeVisitor(this);
 	}
 
 	public int execute() throws Exception {
@@ -47,7 +49,8 @@ public class DeleteConsole {
 			table = DataTableManager.loadTable(tableInfo);
 			int len = table.getRecords().size();
 			for (cur = 0; cur < len; cur++) {
-				visitTree((sqlParser.ExprContext) tree.getChild(3).getChild(1));
+				visitor.visitTree((sqlParser.ExprContext) tree.getChild(3)
+						.getChild(1));
 				if (((ValueTree) tree.getChild(3).getChild(1)).getValue()
 						.getValue().equals(true)) {
 					ret++;
@@ -64,158 +67,7 @@ public class DeleteConsole {
 		return ret;
 	}
 
-	private void visitTree(sqlParser.SubvalContext tree) throws Exception {
-		if (tree.getChildCount() == 1) {
-			if (tree.getChild(0) instanceof sqlParser.ConstsContext) {
-				tree.value = ((sqlParser.ConstsContext) tree.getChild(0)).value;
-			} else {
-				tree.value = this.getColValue(tree.getText());
-			}
-		} else {
-			ParseTree _op = tree.getChild(1);
-			if (tree.getChild(0) instanceof sqlParser.Colomn_nameContext) {
-				visitTree((sqlParser.Colomn_nameContext) tree.getChild(0));
-			}
-			if (tree.getChild(2) instanceof sqlParser.Colomn_nameContext) {
-				visitTree((sqlParser.Colomn_nameContext) tree.getChild(2));
-			}
-			String op = _op.getText();
-			ValueTree left = (ValueTree) tree.getChild(0);
-			ValueTree right = (ValueTree) tree.getChild(2);
-			if (op.equals("+")) {
-				tree.value = Calculate.add(left.getValue(), right.getValue());
-			} else if (op.equals("-")) {
-				tree.value = Calculate.sub(left.getValue(), right.getValue());
-			} else if (op.equals("-")) {
-				tree.value = Calculate.sub(left.getValue(), right.getValue());
-			} else if (op.equals("-")) {
-				tree.value = Calculate.sub(left.getValue(), right.getValue());
-			}
-		}
-	}
-
-	private void visitTree(sqlParser.Colomn_nameContext tree) throws Exception {
-		tree.value = getColValue(tree.getText());
-	}
-
-	private void visitTree(sqlParser.ValContext tree) throws Exception {
-		if (tree.getChildCount() == 1) {
-			visitTree((sqlParser.SubvalContext) tree.getChild(0));
-			tree.setValue(((ValueTree) tree.getChild(0)).getValue());
-		} else {
-			String op = tree.getChild(1).getText();
-			visitTree((sqlParser.SubvalContext) tree.getChild(0));
-			visitTree((sqlParser.SubvalContext) tree.getChild(2));
-			ValueTree left = (ValueTree) tree.getChild(0);
-			ValueTree right = (ValueTree) tree.getChild(2);
-			if (op.equals("+")) {
-				tree.setValue(Calculate.add(left.getValue(), right.getValue()));
-			} else if (op.equals("-")) {
-				tree.setValue(Calculate.sub(left.getValue(), right.getValue()));
-			} else if (op.equals("*")) {
-				tree.setValue(Calculate.mul(left.getValue(), right.getValue()));
-			} else if (op.equals("/")) {
-				tree.setValue(Calculate.div(left.getValue(), right.getValue()));
-			}
-		}
-	}
-
-	private void visitTree(sqlParser.Bool_valContext tree) throws Exception {
-		if (tree.getChildCount() == 1) {
-			visitTree((sqlParser.Sub_bool_valContext) tree.getChild(0));
-			tree.setValue(((sqlParser.Sub_bool_valContext) tree.getChild(0))
-					.getValue());
-		} else if (tree.getChildCount() == 3
-				&& tree.getChild(1) instanceof sqlParser.Bool_opContext) {
-			ValueTree left = (ValueTree) tree.getChild(0);
-			ValueTree right = (ValueTree) tree.getChild(2);
-			visitTree((sqlParser.Sub_bool_valContext) tree.getChild(0));
-			visitTree((sqlParser.Sub_bool_valContext) tree.getChild(2));
-			String op = tree.getChild(1).getText();
-			if (op.toLowerCase().equals("and")) {
-				tree.setValue(Calculate.and(left.getValue(), right.getValue()));
-			} else if (op.toLowerCase().equals("or")) {
-				tree.setValue(Calculate.or(left.getValue(), right.getValue()));
-			}
-		}
-	}
-
-	private void visitTree(sqlParser.Sub_bool_valContext tree) throws Exception {
-		String op = tree.getChild(1).getText();
-		visitTree((sqlParser.ValContext) tree.getChild(0));
-		visitTree((sqlParser.ValContext) tree.getChild(2));
-		ValueTree left = (ValueTree) tree.getChild(0);
-		ValueTree right = (ValueTree) tree.getChild(2);
-		if (op.equals("<")) {
-			tree.setValue(Calculate.less(left.getValue(), right.getValue()));
-		} else if (op.equals(">")) {
-			tree.setValue(Calculate.more(left.getValue(), right.getValue()));
-		} else if (op.equals("=")) {
-			tree.setValue(Calculate.eql(left.getValue(), right.getValue()));
-		} else if (op.equals("<>")) {
-			tree.setValue(Calculate.neql(left.getValue(), right.getValue()));
-		} else if (op.equals("<=")) {
-			tree.setValue(Calculate.nmore(left.getValue(), right.getValue()));
-		} else if (op.equals(">=")) {
-			tree.setValue(Calculate.nless(left.getValue(), right.getValue()));
-		}
-	}
-
-	private void visitTree(sqlParser.ExprContext tree) throws Exception {
-		if (tree.getChildCount() == 0) {
-			return;
-		} else if (tree.getChildCount() == 1) {
-			visitTree((sqlParser.ValContext) tree.getChild(0));
-			tree.setValue(((ValueTree) tree.getChild(0)).getValue());
-		} else if (tree.getChild(1) instanceof sqlParser.OpContext) {
-			String op = tree.getChild(1).getText();
-			visitTree((sqlParser.ValContext) tree.getChild(0));
-			visitTree((sqlParser.ValContext) tree.getChild(2));
-			ValueTree left = (ValueTree) tree.getChild(0);
-			ValueTree right = (ValueTree) tree.getChild(2);
-			if (op.equals("+")) {
-				tree.setValue(Calculate.add(left.getValue(), right.getValue()));
-			} else if (op.equals("-")) {
-				tree.setValue(Calculate.sub(left.getValue(), right.getValue()));
-			} else if (op.equals("*")) {
-				tree.setValue(Calculate.mul(left.getValue(), right.getValue()));
-			} else if (op.equals("/")) {
-				tree.setValue(Calculate.div(left.getValue(), right.getValue()));
-			}
-		} else if (tree.getChild(1) instanceof sqlParser.CompareContext) {
-			String op = tree.getChild(1).getText();
-			visitTree((sqlParser.ValContext) tree.getChild(0));
-			visitTree((sqlParser.ValContext) tree.getChild(2));
-			ValueTree left = (ValueTree) tree.getChild(0);
-			ValueTree right = (ValueTree) tree.getChild(2);
-			if (op.equals("<")) {
-				tree.setValue(Calculate.less(left.getValue(), right.getValue()));
-			} else if (op.equals(">")) {
-				tree.setValue(Calculate.more(left.getValue(), right.getValue()));
-			} else if (op.equals("=")) {
-				tree.setValue(Calculate.eql(left.getValue(), right.getValue()));
-			} else if (op.equals("<>")) {
-				tree.setValue(Calculate.neql(left.getValue(), right.getValue()));
-			} else if (op.equals("<=")) {
-				tree.setValue(Calculate.nmore(left.getValue(), right.getValue()));
-			} else if (op.equals(">=")) {
-				tree.setValue(Calculate.nless(left.getValue(), right.getValue()));
-			}
-		} else if (tree.getChild(1) instanceof sqlParser.Bool_opContext) {
-			String op = tree.getChild(1).getText();
-			visitTree((sqlParser.Bool_valContext) tree.getChild(0));
-			visitTree((sqlParser.Bool_valContext) tree.getChild(2));
-			ValueTree left = (ValueTree) tree.getChild(0);
-			ValueTree right = (ValueTree) tree.getChild(2);
-			if (op.toLowerCase().equals("and")) {
-				tree.setValue(Calculate.and(left.getValue(), right.getValue()));
-			} else if (op.toLowerCase().equals("or")) {
-				tree.setValue(Calculate.or(left.getValue(), right.getValue()));
-			}
-		}
-	}
-
-	private ValueBase getColValue(String Column) throws Exception {
+	public ValueBase getColValue(String Column) throws Exception {
 		if (Column.indexOf(".") == -1) {
 			int i;
 			for (i = 0; i < table.getColumns().size(); i++) {

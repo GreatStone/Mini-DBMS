@@ -5,11 +5,11 @@ import java.util.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import DBMS.parser.ValueTree;
 import DBMS.parser.sqlParser;
-import com.db.minidb.data.database.DataRecord;
-import com.db.minidb.data.database.DataTable;
-import com.db.minidb.data.value.ValueBase;
-import com.db.minidb.dict.database.DictColumnInfo;
-import com.db.minidb.dict.type.TypeDataEnum;
+import DBMS.data.database.DataRecord;
+import DBMS.data.database.DataTable;
+import DBMS.data.value.ValueBase;
+import DBMS.dict.database.DictColumnInfo;
+import DBMS.dict.type.TypeDataEnum;
 
 public class SelectSet implements ExecuteConsole {
 	private List<DataTable> tables;

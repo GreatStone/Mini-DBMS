@@ -1,6 +1,6 @@
 package DBMS.parser;
 
-import com.db.minidb.data.value.ValueBase;
+import DBMS.data.value.ValueBase;
 
 public interface ValueTree {
 	public ValueBase getValue();

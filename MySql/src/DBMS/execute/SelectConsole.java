@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import com.db.minidb.data.database.DataTable;
-import com.db.minidb.data.database.DataTableManager;
-import com.db.minidb.dict.database.DictDatabaseInfo;
-import com.db.minidb.dict.database.DictTableInfo;
+import DBMS.data.database.DataTable;
+import DBMS.data.database.DataTableManager;
+import DBMS.dict.database.DictDatabaseInfo;
+import DBMS.dict.database.DictTableInfo;
 import DBMS.parser.sqlParser;
 
 public class SelectConsole {

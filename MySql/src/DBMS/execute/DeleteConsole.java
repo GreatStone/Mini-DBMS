@@ -7,13 +7,13 @@ import DBMS.execute.QueryInfo;
 import DBMS.parser.ValueTree;
 import DBMS.parser.sqlParser;
 
-import com.db.minidb.data.database.DataRecord;
-import com.db.minidb.data.database.DataTable;
-import com.db.minidb.data.database.DataTableManager;
-import com.db.minidb.data.value.ValueBase;
-import com.db.minidb.dict.database.DictCenterManager;
-import com.db.minidb.dict.database.DictTableInfo;
-import com.db.minidb.dict.type.TypeDataEnum;
+import DBMS.data.database.DataRecord;
+import DBMS.data.database.DataTable;
+import DBMS.data.database.DataTableManager;
+import DBMS.data.value.ValueBase;
+import DBMS.dict.database.DictCenterManager;
+import DBMS.dict.database.DictTableInfo;
+import DBMS.dict.type.TypeDataEnum;
 
 public class DeleteConsole implements ExecuteConsole {
 	private ParseTree tree;

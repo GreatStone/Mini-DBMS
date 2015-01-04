@@ -3,7 +3,7 @@ package test;
 import java.util.*;
 
 import DBMS.execute.SqlConsole;
-import com.db.minidb.sys.server.Server;
+import DBMS.sys.server.Server;
 
 public class Test {
 	public static void main(String[] args) {

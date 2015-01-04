@@ -1,11 +1,11 @@
 package DBMS.execute;
 
-import com.db.minidb.data.value.ValueBase;
-import com.db.minidb.data.value.ValueBool;
-import com.db.minidb.data.value.ValueDouble;
-import com.db.minidb.data.value.ValueInt;
-import com.db.minidb.data.value.ValueString;
-import com.db.minidb.dict.type.TypeDataEnum;
+import DBMS.data.value.ValueBase;
+import DBMS.data.value.ValueBool;
+import DBMS.data.value.ValueDouble;
+import DBMS.data.value.ValueInt;
+import DBMS.data.value.ValueString;
+import DBMS.dict.type.TypeDataEnum;
 
 public class Calculate {
 	private Calculate() {

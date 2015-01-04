@@ -7,21 +7,22 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import DBMS.parser.ValueTree;
 
-import com.db.minidb.data.database.DataRecord;
-import com.db.minidb.data.database.DataTable;
-import com.db.minidb.data.database.DataTableManager;
-import com.db.minidb.data.value.ValueDouble;
-import com.db.minidb.data.value.ValueInt;
-import com.db.minidb.data.value.ValueString;
-import com.db.minidb.dict.database.DictColumnInfo;
-import com.db.minidb.dict.database.DictDatabaseInfo;
-import com.db.minidb.dict.database.DictTableInfo;
-import com.db.minidb.dict.type.TypeDataEnum;
+import DBMS.data.database.DataRecord;
+import DBMS.data.database.DataTable;
+import DBMS.data.database.DataTableManager;
+import DBMS.data.value.ValueDouble;
+import DBMS.data.value.ValueInt;
+import DBMS.data.value.ValueString;
+import DBMS.dict.database.DictColumnInfo;
+import DBMS.dict.database.DictDatabaseInfo;
+import DBMS.dict.database.DictTableInfo;
+import DBMS.dict.type.TypeDataEnum;
 
 public class InsertConsole {
 	private ParseTree tree;
 	private DictTableInfo tableInfo = null;
 	private DataRecord record = new DataRecord();
+	DataTable __table = new DataTable();
 
 	public void execute() throws Exception {
 		DictDatabaseInfo __dbInfo = QueryInfo.get__dbInfo();
@@ -39,6 +40,7 @@ public class InsertConsole {
 		if (tableInfo == null) {
 			throw new Exception("Table " + __name + " not found");
 		}
+		__table = DataTableManager.loadTable(tableInfo);
 		List<TypeDataEnum> types = new ArrayList<TypeDataEnum>();
 		for (DictColumnInfo e : tableInfo.getColumns()) {
 			types.add(e.getType().getTypeEnum());
@@ -67,16 +69,41 @@ public class InsertConsole {
 					throw new Exception();
 				}
 			}
+
+			if (!check()) {
+				throw new Exception();
+			}
+
 			if (cnt != tableInfo.getColumnCount()) {
 				throw new Exception();
 			}
 		} catch (Exception e) {
 			throw new Exception("Unavailable inserted data");
 		}
-		DataTable __table = new DataTable();
-		__table = DataTableManager.loadTable(tableInfo);
 		__table.getRecords().add(record);
 		DataTableManager.storeTable(__table);
+	}
+
+	private boolean check() {
+		List<Integer> map = new ArrayList<Integer>();
+		for (DictColumnInfo e : tableInfo.getPrimaryKeys()) {
+			map.add(tableInfo.getColumns().indexOf(e));
+		}
+		boolean pass = true;
+		for (DataRecord e : __table.getRecords()) {
+			boolean __tmp = true;
+			for (Integer f : map) {
+				if (!record.getValues().get(f).equals(e.getValues().get(f))) {
+					__tmp = false;
+					break;
+				}
+			}
+			if (__tmp) {
+				pass = false;
+				break;
+			}
+		}
+		return pass;
 	}
 
 	public void setTree(ParseTree tree) {

@@ -2,8 +2,8 @@
 package DBMS.parser;
 
 import java.util.*;
-import com.db.minidb.data.value.*;
-import com.db.minidb.dict.type.*;
+import DBMS.data.value.*;
+import DBMS.dict.type.*;
 import DBMS.execute.*;
 
 import org.antlr.v4.runtime.atn.*;

@@ -2,10 +2,10 @@ package DBMS.execute;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import com.db.minidb.data.database.DataRecord;
-import com.db.minidb.data.value.ValueBase;
-import com.db.minidb.data.value.ValueBool;
-import com.db.minidb.dict.type.TypeDataEnum;
+import DBMS.data.database.DataRecord;
+import DBMS.data.value.ValueBase;
+import DBMS.data.value.ValueBool;
+import DBMS.dict.type.TypeDataEnum;
 
 import DBMS.parser.ValueTree;
 import DBMS.parser.sqlParser;

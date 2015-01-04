@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import com.db.minidb.data.database.DataTable;
-import com.db.minidb.data.database.DataTableManager;
-import com.db.minidb.data.value.ValueBase;
-import com.db.minidb.dict.database.DictCenterManager;
-import com.db.minidb.dict.database.DictTableInfo;
-import com.db.minidb.dict.type.TypeDataEnum;
+import DBMS.data.database.DataTable;
+import DBMS.data.database.DataTableManager;
+import DBMS.data.value.ValueBase;
+import DBMS.dict.database.DictCenterManager;
+import DBMS.dict.database.DictTableInfo;
+import DBMS.dict.type.TypeDataEnum;
 
 import DBMS.parser.*;
 import DBMS.parser.sqlParser.Col_expContext;
@@ -34,13 +34,14 @@ public class UpdateConsole implements ExecuteConsole {
 		visitor = new TreeVisitor(this);
 	}
 
-	public void execute() throws Exception {
+	public int execute() throws Exception {
 		tableInfo = DictCenterManager.findTableWithName(
 				QueryInfo.get__dbInfo(), tableName);
 		table = DataTableManager.loadTable(tableInfo);
 		cur = 0;
 		boolean choose;
 		int len = table.getRecords().size();
+		int ret = 0;
 		for (cur = 0; cur < len; cur++) {
 			if (chooseAll) {
 				choose = true;
@@ -50,6 +51,7 @@ public class UpdateConsole implements ExecuteConsole {
 						.getValue());
 			}
 			if (choose) {
+				ret++;
 				for (sqlParser.Col_expContext e : sets) {
 					String __col = e.getChild(0).getText();
 					visitor.visitTree((sqlParser.ExprContext) e.getChild(2));
@@ -58,6 +60,7 @@ public class UpdateConsole implements ExecuteConsole {
 			}
 		}
 		DataTableManager.storeTable(table);
+		return ret;
 	}
 
 	public ValueBase getColValue(String Column) throws Exception {

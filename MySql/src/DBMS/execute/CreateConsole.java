@@ -6,9 +6,9 @@ import java.util.List;
 import org.antlr.v4.runtime.tree.ParseTree;
 import DBMS.parser.sqlParser;
 
-import com.db.minidb.dict.database.DictCenterManager;
-import com.db.minidb.dict.database.DictDatabaseInfo;
-import com.db.minidb.dict.database.DictTableInfo;
+import DBMS.dict.database.DictCenterManager;
+import DBMS.dict.database.DictDatabaseInfo;
+import DBMS.dict.database.DictTableInfo;
 
 public class CreateConsole {
 	private ParseTree tree;
@@ -48,11 +48,20 @@ public class CreateConsole {
 				break;
 			}
 		}
+		List<String> primaryKeys = new ArrayList<String>();
+		if (tree.getChild(i) instanceof sqlParser.Primary_colContext) {
+			ParseTree primaryTree = tree.getChild(i);
+			int j;
+			for (j = 3; j < primaryTree.getChildCount(); j += 2) {
+				primaryKeys.add(primaryTree.getChild(j).getText());
+			}
+		}
 		// TODO
-		// primary key and foreign key
+		// foreign key
 		DictCenterManager.addTable(dbInfo, tableName,
 				(String[]) columnsName.toArray(new String[0]),
-				(String[]) columnsType.toArray(new String[0]));
+				(String[]) columnsType.toArray(new String[0]),
+				(String[]) primaryKeys.toArray(new String[0]));
 	}
 
 	public void setTree(ParseTree tree) {

@@ -1,6 +1,6 @@
 package DBMS.execute;
 
-import com.db.minidb.dict.database.*;
+import DBMS.dict.database.*;
 
 public class QueryInfo {
 	private static QueryInfo __qInfo = new QueryInfo();

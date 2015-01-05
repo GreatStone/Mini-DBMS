@@ -1,6 +1,7 @@
 package DBMS.dict.database;
 
 import java.io.*;
+import java.nio.*;
 import java.util.*;
 
 import DBMS.data.database.DataTableManager;
@@ -85,6 +86,7 @@ public class DictDatabaseManager {
 				DictTableInfo table =DictTableManager.readTableInfoFromStream(tis);
 				table.setDatabase(database);
 				tables.add(table);
+				FileTool.closeInputStream(tis);
 			}
 			database.setTables(tables);
 			return database;
@@ -93,7 +95,10 @@ public class DictDatabaseManager {
 	public static DictDatabaseInfo readDatabaseInfoFromFile(File file) {
 		synchronized (lockObj) {
 			InputStream is = FileTool.getInputStream(file);
-			return readDatabaseInfoFromStream(is);
+			DictDatabaseInfo ret = readDatabaseInfoFromStream(is);
+			FileTool.closeInputStream(is);
+			
+			return ret;
 		}
 	}
 	public static void writeDatabaseInfoToStream(DictDatabaseInfo database, OutputStream os) {
@@ -110,6 +115,7 @@ public class DictDatabaseManager {
 				BinaryFileIOTool.writeString(table.getTableName(), os);
 				OutputStream tos = FileTool.getOutputStream(FileTool.openFile(DictTableManager.getTableDictFileFullPath(table)));
 				DictTableManager.writeTableInfoToStream(table, tos);
+				FileTool.closeOutputStream(tos);
 			}
 		}
 	}
@@ -120,6 +126,7 @@ public class DictDatabaseManager {
 			}
 			OutputStream os = FileTool.getOutputStream(file);
 			writeDatabaseInfoToStream(database, os);
+			FileTool.closeOutputStream(os);
 		}
 	}
 	
@@ -137,6 +144,13 @@ public class DictDatabaseManager {
 						.loadTable(table)));
 			}
 			return bf.toString();
+		}
+	}
+	public static boolean removeDictFile(DictDatabaseInfo database) {
+		synchronized (lockObj) {
+			String fileName = getDatabaseDictFileFullPath(database);
+			File file = FileTool.openFile(fileName);
+			return file.delete();
 		}
 	}
 }

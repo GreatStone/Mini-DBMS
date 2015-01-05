@@ -1,8 +1,12 @@
 package DBMS.dict.database;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 
+import DBMS.data.database.DataTableManager;
 import DBMS.sys.setting.PropertiesFileManager;
 import DBMS.util.BinaryFileIOTool;
 import DBMS.util.FileTool;
@@ -89,10 +93,12 @@ public class DictTableManager {
 			return table;
 		}
 	}
-	public static DictTableInfo readTableInfoFromFile(File file) {
+	public static DictTableInfo readTableInfoFromFile(String fileName) {
 		synchronized (lockObj) {
-			InputStream is = FileTool.getInputStream(file);
-			return readTableInfoFromStream(is);
+			InputStream is = FileTool.getInputStream(FileTool.openFile(fileName));
+			DictTableInfo ret = readTableInfoFromStream(is);
+			FileTool.closeInputStream(is);
+			return ret;
 		}
 	}
 	public static void writeTableInfoToStream(DictTableInfo table, OutputStream os) {
@@ -110,10 +116,11 @@ public class DictTableManager {
 			}
 		}
 	}
-	public static void writeTableInfoToFile(DictTableInfo table, File file) {
+	public static void writeTableInfoToFile(DictTableInfo table, String fileName) {
 		synchronized (lockObj) {
-			OutputStream os = FileTool.getOutputStream(file);
+			OutputStream os = FileTool.getOutputStream(FileTool.openFile(fileName));
 			writeTableInfoToStream(table, os);
+			FileTool.closeOutputStream(os);
 		}
 	}
 	
@@ -171,6 +178,31 @@ public class DictTableManager {
 			}
 			bf.append(")]");
 			return bf.toString();
+		}
+	}
+	public static boolean removeDataFile(DictTableInfo table) {
+		synchronized (lockObj) {
+			if(table == null) return false;
+			String fileName = DataTableManager.getTableDataFileFullPath(table);
+			File file = FileTool.openFile(fileName);
+			boolean flag = false;
+			if(file.isFile() && file.exists()) {
+				flag = file.delete();
+			}
+			return true;
+		}
+	}
+	public static boolean removeDictFile(DictTableInfo table) {
+		synchronized (lockObj) {
+			if(table == null) return false;
+			String fileName = DictTableManager.getTableDictFileFullPath(table);
+			try {
+				java.nio.file.Files.delete(FileTool.openFile(fileName).toPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
 		}
 	}
 }

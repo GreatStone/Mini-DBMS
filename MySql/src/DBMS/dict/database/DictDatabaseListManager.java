@@ -50,7 +50,8 @@ public class DictDatabaseListManager {
 				@SuppressWarnings("unused")
 				String databaseName = BinaryFileIOTool.readString(is);
 				InputStream dis = FileTool.getInputStream(FileTool.openFile(DictDatabaseManager.getDatabaseDictFileFullPath(databaseId)));
-				databases.add(DictDatabaseManager.readDatabaseInfoFromStream(dis));				
+				databases.add(DictDatabaseManager.readDatabaseInfoFromStream(dis));
+				FileTool.closeInputStream(dis);
 			}
 			databaseList.setDatabases(databases);
 			return databaseList;
@@ -68,6 +69,7 @@ public class DictDatabaseListManager {
 				BinaryFileIOTool.writeString(database.getDatabaseName(), os);
 				OutputStream dos = FileTool.getOutputStream(FileTool.openFile(DictDatabaseManager.getDatabaseDictFileFullPath(database)));
 				DictDatabaseManager.writeDatabaseInfoToStream(database, dos);
+				FileTool.closeOutputStream(dos);
 			}
 		}
 	}
@@ -78,12 +80,15 @@ public class DictDatabaseListManager {
 			}
 			OutputStream os = FileTool.getOutputStream(file);
 			writeDatabaseListToStream(databaseList, os);
+			FileTool.closeOutputStream(os);
 		}
 	}
 	public static DictDatabaseListInfo readDatabaseListFromFile(File file) {
 		synchronized (lockObj) {
 			InputStream is = FileTool.getInputStream(file);
-			return readDatabaseListFromStream(is);
+			DictDatabaseListInfo ret = readDatabaseListFromStream(is);
+			FileTool.closeInputStream(is);
+			return ret;
 		}
 	}
 	public static String displayDatabaseList(DictDatabaseListInfo databaseList) {

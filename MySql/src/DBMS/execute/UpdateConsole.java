@@ -35,8 +35,14 @@ public class UpdateConsole implements ExecuteConsole {
 	}
 
 	public int execute() throws Exception {
+		if (QueryInfo.get__dbInfo() == null){
+			throw new Exception("No choosed database.");
+		}
 		tableInfo = DictCenterManager.findTableWithName(
 				QueryInfo.get__dbInfo(), tableName);
+		if (tableInfo == null){
+			throw new Exception("No such a table "+tableName);
+		}
 		table = DataTableManager.loadTable(tableInfo);
 		cur = 0;
 		boolean choose;

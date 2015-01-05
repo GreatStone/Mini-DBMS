@@ -1,6 +1,7 @@
 package DBMS.dict.database;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import DBMS.data.database.DataCenterManager;
 import DBMS.dict.type.TypeDataEnum;
@@ -65,7 +66,7 @@ public class DictCenterManager {
 		synchronized (lockObj) {
 			DictDatabaseInfo database = createDatabase(databaseName);
 			database.setDatabaseId(databaseList.getNextDatabaseId());
-			System.out.println(database.getDatabaseName() + "~" + database.getDatabaseId());
+//			System.out.println(database.getDatabaseName() + "~" + database.getDatabaseId());
 			databaseList.getDatabases().add(database);
 			databaseList.setDatabaseCount(databaseList.getDatabases().size());
 			databaseList
@@ -78,7 +79,16 @@ public class DictCenterManager {
 
 	public static boolean removeDatabase(String databaseName, Session session) {
 		synchronized (lockObj) {
-			return false;
+			DictDatabaseInfo databasePre = findDatabaseWithName(databaseName);
+			if(databasePre == null) return false;
+			for(DictTableInfo table : databasePre.getTables()) {
+				removeTable(table);
+			}
+			if(!DictDatabaseManager.removeDictFile(databasePre)) return false;
+			databaseList.getDatabases().remove(databasePre);
+			databaseList.setDatabaseCount(databaseList.getDatabases().size());
+			storeDataDict();
+			return true;
 		}
 	}
 
@@ -121,9 +131,25 @@ public class DictCenterManager {
 		}
 	}
 
+	private static boolean removeTable(DictTableInfo table) {
+		synchronized (lockObj) {
+			if(!DictTableManager.removeDataFile(table) ||
+			   !DictTableManager.removeDictFile(table)) return false;
+			return true;
+		}
+	}
+	
 	public static boolean removeTable(String databaseName, String tableName,
 			Session session) {
 		synchronized (lockObj) {
+			DictDatabaseInfo database = findDatabaseWithName(databaseName);
+			DictTableInfo table = findTableWithName(database, tableName);
+			if(table == null) return false;
+			removeTable(table);
+			database.getTables().remove(table);
+			database.setTableCount(database.getTables().size());
+//			System.out.println(database.getTables().size());
+			storeDataDict();
 			return false;
 		}
 	}

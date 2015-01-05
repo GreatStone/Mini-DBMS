@@ -122,6 +122,7 @@ public class UserManager {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static void loadDictUserFile() {
 		FileInputStream fis = null;
 		try {
@@ -139,6 +140,7 @@ public class UserManager {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static void storeDictUserFile() {
 		FileOutputStream fos = null;
 		try {
@@ -153,6 +155,7 @@ public class UserManager {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public static User findUserWithUsername(String username) {
 		DictDatabaseInfo systemDatabase = DictCenterManager
 				.findDatabaseWithName(PropertiesFileManager

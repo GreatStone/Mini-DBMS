@@ -96,7 +96,10 @@ public class SqlConsole {
 				}
 				int __effected = __console.execute();
 				return __effected + " rows had been effected.";
-			} else {
+			} else if (tree.getChild(0) instanceof sqlParser.Sql_drop_databaseContext){
+				//DictCenterManager.removeDatabase(tree.getChild(0).getChild(1).getText(), )
+			}
+			else {
 				// TODO;
 			}
 		} catch (Exception e) {

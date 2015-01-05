@@ -54,6 +54,7 @@ public class ClientServer extends Thread {
 			}
 		}
 	}
+	@SuppressWarnings("unused")
 	private void writeLine(PrintWriter writer, String msg, boolean isFlush) {
 		synchronized (lockObj) {
 			writer.println(msg);

@@ -51,7 +51,7 @@ foreign_col
 	:	KEY_FOREIGN KEY_KEY colomn_name KEY_REFERENCES table_name colomn_name;
 
 sql_select returns [SelectSet value]
-	:	KEY_SELECT colomns (',' colomns)* 
+	:	KEY_SELECT ((colomns (',' colomns)* )|'*')
 		KEY_FROM tables  (',' tables)*
 		sql_where? {System.out.println("SQL_SELECT");};
 
@@ -79,8 +79,7 @@ tables
 
 colomns
          :	(colomn_name (KEY_AS colomn_alias_name)?)
-         |  (val KEY_AS colomn_alias_name)
-         | '*';
+         |  (val KEY_AS colomn_alias_name);
 
 consts returns [ValueBase value]
 	:	x=type_int {$value = $x.value; }

@@ -39,10 +39,10 @@ public class TreeVisitor {
 				tree.value = Calculate.add(left.getValue(), right.getValue());
 			} else if (op.equals("-")) {
 				tree.value = Calculate.sub(left.getValue(), right.getValue());
-			} else if (op.equals("-")) {
-				tree.value = Calculate.sub(left.getValue(), right.getValue());
-			} else if (op.equals("-")) {
-				tree.value = Calculate.sub(left.getValue(), right.getValue());
+			} else if (op.equals("*")) {
+				tree.value = Calculate.mul(left.getValue(), right.getValue());
+			} else if (op.equals("/")) {
+				tree.value = Calculate.div(left.getValue(), right.getValue());
 			}
 		}
 	}

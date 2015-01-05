@@ -94,6 +94,7 @@ public class LoginServer extends Thread {
 			return ret;
 		}
 	}
+	@SuppressWarnings("unused")
 	private void writeLine(PrintWriter writer, String msg, boolean isFlush) {
 		synchronized (lockOutputObj) {
 			writer.println(msg);

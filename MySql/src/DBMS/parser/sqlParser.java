@@ -2429,7 +2429,30 @@ public class sqlParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(391); ((Type_stringContext)_localctx).x = match(STRINGIDENTI);
-			String __ = (((Type_stringContext)_localctx).x!=null?((Type_stringContext)_localctx).x.getText():null); ((Type_stringContext)_localctx).value =  new ValueString(TypeDataEnum.STRING,__.substring(1,__.length()-1));
+			String __ = (((Type_stringContext)_localctx).x!=null?((Type_stringContext)_localctx).x.getText():null);
+			int i;
+			int len = __.length();
+			String save = "";
+			char tmp;
+			for (i = 0; i < len; i++){
+				if ((tmp=__.charAt(i))!='\\')
+					save += tmp;
+				else{
+					i++;
+					tmp = __.charAt(i);
+					if (tmp == '\\')
+						save += tmp;
+					else if (tmp == 'n')
+						save += '\n';
+					else if (tmp == 's')
+						save += ' ';
+					else if (tmp == 't')
+						save += '\t';
+					else
+						save += tmp;
+				}
+			}
+			((Type_stringContext)_localctx).value =  new ValueString(TypeDataEnum.STRING,__.substring(1,__.length()-1));
 			}
 		}
 		catch (RecognitionException re) {
